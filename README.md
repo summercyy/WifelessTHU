@@ -9,7 +9,7 @@ Social network system for database class
 
 ### 配置
 * 在 MySQL 中新建数据库和用户，并分配权限
- * `CREATE DATABASE 'databasename';`
+ * `CREATE DATABASE 'databasename' DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;`
  * `GRANT ALL PRIVILEGES ON 'databasename'.* TO 'username'@localhost IDENTIFIED BY 'password';`
 * 刷新权限
  * `FLUSH PRIVILEGES;` 
@@ -17,4 +17,4 @@ Social network system for database class
  * `USE 'databasename';`
  * `SOURCE /initialize.sql;`
 * 网站根目录下复制文件 `config.sample.php` 为 `config.php`
-* 编辑 `config.php` 文件，输入数据库用户名和密码
+* 编辑 `config.php` 文件，输入 MySQL 用户名、密码和数据库名
