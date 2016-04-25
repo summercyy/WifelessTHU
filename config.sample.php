@@ -28,3 +28,6 @@ define('SOCIAL_DB_HOSTNAME', 'localhost');
 //** Debug settings. **//
 /** Whether server should report errors. */
 define('SOCIAL_REPORT_ERRORS', false);
+
+//** Time zone settings. **//
+date_default_timezone_set('PRC'); // PRC为“中华人民共和国”
