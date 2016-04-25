@@ -27,4 +27,4 @@ define('SOCIAL_DB_HOSTNAME', 'localhost');
 
 //** Debug settings. **//
 /** Whether server should report errors. */
-define('EMOTION_DIARY_REPORT_ERRORS', false);
+define('SOCIAL_REPORT_ERRORS', false);

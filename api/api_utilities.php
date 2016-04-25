@@ -11,11 +11,12 @@ require_once '../db_connect.php';
 /**
  * Stop reporting errors to client
  */
-if (!EMOTION_DIARY_REPORT_ERRORS) {
+if (!SOCIAL_REPORT_ERRORS) {
     error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 }
 
 /**
+ * Filter the HTTP request to prevent SQL injection
  * @param object $con Database connection
  * @param string $data The data to be filtered
  * @return string Filtered data

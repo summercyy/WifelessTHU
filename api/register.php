@@ -7,7 +7,7 @@
  */
 
 /**
- * Common functions for Emotion Diary API.
+ * Common functions for Social API.
  */
 require_once 'api_utilities.php';
 $con = db_connect();
