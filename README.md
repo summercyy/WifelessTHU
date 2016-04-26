@@ -1,13 +1,15 @@
-## WifelessTHU
+# WifelessTHU
+
 Social network system for database class
 
-### 环境要求
+## 环境要求
+
 * LAMP 或者 WAMP
 * Apache 版本：2.4+
 * MySQL 版本：5.6+
 * PHP 版本：5.5+
 
-### 配置
+## 配置
 **下文中请将单引号及其中的内容替换为自己定义的名称**
 
 * 在 MySQL 中新建数据库和用户，并分配权限
