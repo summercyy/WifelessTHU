@@ -1,0 +1,30 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Frank
+ * Date: 16/4/27
+ * Time: 下午5:48
+ */
+
+/**
+ * Common functions for Social API.
+ */
+require_once 'api_utilities.php';
+$con = db_connect();
+check_login($con);
+
+$type = filter($con, $_POST["type"]);
+
+$max_length = 0;
+switch ($type) {
+    case "icon":
+        $max_length = 50;
+        break;
+    case "image":
+        $max_length = 200;
+        break;
+    default:
+        report_error(ERROR_ILLEGAL_PARAMETER, "图片类型不合法");
+        break;
+}
+save_image($_POST["image"], $type, $max_length);
