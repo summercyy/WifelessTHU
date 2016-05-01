@@ -39,11 +39,11 @@ function check_login($con) {
     $result = mysqli_fetch_array($result);
     $type = $result["type"];
     $time = strtotime($result["latest_time"]) - time();
-    if ($type == "unknown") {
+    if ($type == "Unknown") {
         $time += 24 * 3600; // 1天
-    } else if ($type == "web") {
+    } else if ($type == "Web") {
         $time += 3 * 24 * 3600; // 3天
-    } else if ($type == "ios" || $type == "android") {
+    } else if ($type == "iOS" || $type == "Android") {
         $time += 15 * 24 * 3600; // 15天
     }
     if ($time < 0) {
@@ -51,7 +51,7 @@ function check_login($con) {
     }
 
     // 更新 token
-    $nowTime = date("Y/m/d G:i:s", time());
+    $nowTime = date("Y-m-d G:i:s", time());
     $con->query("UPDATE token set latest_time = '$nowTime' WHERE userid = '$userid' AND token = '$token'");
     check_sql_error($con);
 }
