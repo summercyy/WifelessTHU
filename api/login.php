@@ -21,8 +21,8 @@ if ((strlen($name) == 0 && strlen($email) == 0) || strlen($password) == 0) {
     report_error(ERROR_MISSING_PARAMETER);
 }
 
-if (!($type == "ios" || $type == "android" || $type == "web" || $type == "reset")) {
-    $type = "unknown";
+if (!($type == "iOS" || $type == "Android" || $type == "Web")) {
+    $type = "Unknown";
 }
 
 $result = null;
