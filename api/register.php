@@ -87,5 +87,5 @@ if ($function == "edit") {
 } else {
     $type = filter($con, $_POST["type"]);
     $result = request_post("/login.php", array("name" => $name, "password" => $password, "type" => $type));
-    report_success(array("userid" => $result["data"]["userid"], "token" => $result["data"]["token"]));
+    report_success(array("userid" => $result["data"]["userid"], "token" => $result["data"]["token"], "name" => $result["data"]["name"]));
 }
