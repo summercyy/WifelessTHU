@@ -117,10 +117,7 @@ function check_sql_error($con, $should_exit = true) {
         if (SOCIAL_REPORT_ERRORS) {
             $message = mysqli_error($con);
         }
-        echo json_encode(array("code" => ERROR_SERVER_ERROR, "message" => $message));
-        if ($should_exit) {
-            exit();
-        }
+        report_error(ERROR_SERVER_ERROR, $message, $should_exit);
     }
 }
 
