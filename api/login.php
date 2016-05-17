@@ -21,8 +21,8 @@ if ((strlen($name) == 0 && strlen($email) == 0) || strlen($password) == 0) {
     report_error(ERROR_MISSING_PARAMETER);
 }
 
-if (!($type == "ios" || $type == "android" || $type == "web" || $type == "reset")) {
-    $type = "unknown";
+if (!($type == "iOS" || $type == "Android" || $type == "Web")) {
+    $type = "Unknown";
 }
 
 $result = null;
@@ -42,6 +42,7 @@ if (strtoupper($password) != strtoupper($result["password"])) {
 
 $userid = $result["userid"];
 $token = null;
+$name = $result["name"];
 do {
     $token = random_string();
     $con->query("SELECT * FROM token WHERE token = '$token'");
@@ -49,4 +50,4 @@ do {
 } while (mysqli_affected_rows($con) > 0);
 $con->query("INSERT INTO token (token, userid, type) VALUES ('$token', '$userid', '$type')");
 check_sql_error($con);
-report_success(array("userid" => $userid, "token" => $token));
+report_success(array("userid" => $userid, "token" => $token, "name" => $name));

@@ -22,3 +22,9 @@ CREATE TABLE IF NOT EXISTS `token` (
   `latest_time` TIMESTAMP NOT NULL DEFAULT NOW(),
   FOREIGN KEY (`userid`) REFERENCES user(`userid`)
 );
+
+-- Token clearing schedule
+
+SET GLOBAL event_scheduler = 1;
+CREATE EVENT IF NOT EXISTS `clear_token` ON SCHEDULE EVERY 1 DAY
+DO DELETE FROM token WHERE TO_DAYS(NOW()) - TO_DAYS(latest_time) > 30;

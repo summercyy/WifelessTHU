@@ -29,7 +29,7 @@ function check_login($con) {
     $token = filter($con, $_POST["token"]);
     $userid = filter($con, $_POST["userid"]);
     if (strlen($token) == 0 || strlen($userid) == 0) {
-        report_error(ERROR_MISSING_PARAMETER);
+        report_error(ERROR_LOGIN_CHECK_FAILED);
     }
     $result = $con->query("SELECT * FROM token WHERE userid = '$userid' AND token = '$token'");
     check_sql_error($con);
@@ -39,11 +39,11 @@ function check_login($con) {
     $result = mysqli_fetch_array($result);
     $type = $result["type"];
     $time = strtotime($result["latest_time"]) - time();
-    if ($type == "unknown") {
+    if ($type == "Unknown") {
         $time += 24 * 3600; // 1天
-    } else if ($type == "web") {
+    } else if ($type == "Web") {
         $time += 3 * 24 * 3600; // 3天
-    } else if ($type == "ios" || $type == "android") {
+    } else if ($type == "iOS" || $type == "Android") {
         $time += 15 * 24 * 3600; // 15天
     }
     if ($time < 0) {
@@ -51,7 +51,7 @@ function check_login($con) {
     }
 
     // 更新 token
-    $nowTime = date("Y/m/d G:i:s", time());
+    $nowTime = date("Y-m-d G:i:s", time());
     $con->query("UPDATE token set latest_time = '$nowTime' WHERE userid = '$userid' AND token = '$token'");
     check_sql_error($con);
 }
@@ -117,10 +117,7 @@ function check_sql_error($con, $should_exit = true) {
         if (SOCIAL_REPORT_ERRORS) {
             $message = mysqli_error($con);
         }
-        echo json_encode(array("code" => ERROR_SERVER_ERROR, "message" => $message));
-        if ($should_exit) {
-            exit();
-        }
+        report_error(ERROR_SERVER_ERROR, $message, $should_exit);
     }
 }
 

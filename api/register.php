@@ -73,19 +73,25 @@ if (strlen($email) > 0) {
 }
 
 if ($function == "edit") {
-    if (strlen($new_password) == 0) {
+    $changed_password = (strlen($new_password) > 0);
+    if (!$changed_password) {
         $new_password = $password;
     }
     $con->query("UPDATE user SET name = '$name', password = '$new_password', sex = '$sex', email = '$email', icon = '$icon' WHERE userid = '$userid'");
+    check_sql_error($con);
+    if ($changed_password) {
+        $con->query("DELETE * FROM token WHERE userid = '$userid'");
+        check_sql_error($con);
+    }
 } else {
     $con->query("INSERT INTO user (name, password, sex, email, icon) VALUES ('$name', '$password', '$sex', '$email', '$icon')");
+    check_sql_error($con);
 }
-check_sql_error($con);
 
 if ($function == "edit") {
     report_success();
 } else {
     $type = filter($con, $_POST["type"]);
     $result = request_post("/login.php", array("name" => $name, "password" => $password, "type" => $type));
-    report_success(array("userid" => $result["data"]["userid"], "token" => $result["data"]["token"]));
+    report_success(array("userid" => $result["data"]["userid"], "token" => $result["data"]["token"], "name" => $result["data"]["name"]));
 }
