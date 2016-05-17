@@ -10,7 +10,6 @@
  * Common functions for Social API.
  */
 require_once 'api_utilities.php';
-check_version();
 $con = db_connect();
 check_login($con);
 

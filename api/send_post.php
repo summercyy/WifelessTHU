@@ -9,9 +9,9 @@
 // TODO 发表状态的数据放在哪个数据库中？
 // TODO 是否使用cookie对用户进行跟踪？
 
-require_once "api_utilities.php"
+require_once "api_utilities.php";
 $con = db_connect();
 $description = filter($con,$_REQUEST['description']);
 
-$con->query("INSERT")
+$con->query("INSERT");
 
