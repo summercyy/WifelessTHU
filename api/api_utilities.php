@@ -29,7 +29,7 @@ function check_login($con) {
     $token = filter($con, $_POST["token"]);
     $userid = filter($con, $_POST["userid"]);
     if (strlen($token) == 0 || strlen($userid) == 0) {
-        report_error(ERROR_MISSING_PARAMETER);
+        report_error(ERROR_LOGIN_CHECK_FAILED);
     }
     $result = $con->query("SELECT * FROM token WHERE userid = '$userid' AND token = '$token'");
     check_sql_error($con);
