@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   `userid` INTEGER NOT NULL,
   `text` TEXT NOT NULL,
   `create_time` TIMESTAMP NOT NULL DEFAULT NOW(),
+  INDEX (create_time),
   FOREIGN KEY (`userid`) REFERENCES user(`userid`)
 );
 
@@ -47,6 +48,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `userid` INTEGER NOT NULL,
   `text` TINYTEXT NOT NULL,
   `create_time` TIMESTAMP NOT NULL DEFAULT NOW(),
+  INDEX (create_time),
   FOREIGN KEY (`postid`) REFERENCES post(`postid`),
   FOREIGN KEY (`userid`) REFERENCES user(`userid`)
 );
