@@ -1,0 +1,9 @@
+/*  自定义的样式表，用于添加模板之上的效果
+    by Archimekai
+  */
+
+ /* 制定卡片的阴影 */
+.mdl-card
+{
+    box-shadow: 3px 3px 8px #000000;
+}
