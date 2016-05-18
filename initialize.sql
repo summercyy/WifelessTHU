@@ -28,3 +28,25 @@ CREATE TABLE IF NOT EXISTS `token` (
 SET GLOBAL event_scheduler = 1;
 CREATE EVENT IF NOT EXISTS `clear_token` ON SCHEDULE EVERY 1 DAY
 DO DELETE FROM token WHERE TO_DAYS(NOW()) - TO_DAYS(latest_time) > 30;
+
+-- Table structure for table `post`
+
+CREATE TABLE IF NOT EXISTS `post` (
+  `postid` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `userid` INTEGER NOT NULL,
+  `text` TEXT NOT NULL,
+  `create_time` TIMESTAMP NOT NULL DEFAULT NOW(),
+  FOREIGN KEY (`userid`) REFERENCES user(`userid`)
+);
+
+-- Table structure for table `comment`
+
+CREATE TABLE IF NOT EXISTS `comment` (
+  `commentid` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `postid` BIGINT NOT NULL,
+  `userid` INTEGER NOT NULL,
+  `text` TINYTEXT NOT NULL,
+  `create_time` TIMESTAMP NOT NULL DEFAULT NOW(),
+  FOREIGN KEY (`postid`) REFERENCES post(`postid`),
+  FOREIGN KEY (`userid`) REFERENCES user(`userid`)
+);
