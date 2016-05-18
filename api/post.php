@@ -15,6 +15,7 @@ check_login($con);
 
 $userid = intval(filter($con, $_POST["userid"]));
 $text = filter($con, $_POST["text"], false);
+$images = filter($con, $_POST["images"]);
 
 if (strlen($text) == 0) {
     report_error(1, "正文不能为空");
@@ -23,6 +24,15 @@ if (strlen($text) > 65535) {
     report_error(2, "正文过长");
 }
 
-$con->query("INSERT INTO post (userid, text) VALUES ('$userid', '$text')");
+if (count(explode(" | ", $images)) > 9) {
+    report_error(3, "图片数目过多");
+}
+foreach (explode(" | ", $images) as $image) {
+    if (!is_random_string($image, 8)) {
+        report_error(4, "图片名不正确");
+    }
+}
+
+$con->query("INSERT INTO post (userid, text, images) VALUES ('$userid', '$text', '$images')");
 check_sql_error($con);
 report_success();
