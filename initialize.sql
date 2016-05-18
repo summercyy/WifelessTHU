@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   `postid` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `userid` INTEGER NOT NULL,
   `text` TEXT NOT NULL,
+  `images` VARCHAR(128) NOT NULL,
   `create_time` TIMESTAMP NOT NULL DEFAULT NOW(),
   INDEX (`create_time`),
   FOREIGN KEY (`userid`) REFERENCES user(`userid`)
