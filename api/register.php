@@ -12,6 +12,7 @@
 require_once 'api_utilities.php';
 $con = db_connect();
 
+$token = filter($con, $_POST["token"]);
 $userid = intval(filter($con, $_POST["userid"]));
 $name = filter($con, $_POST["name"]);
 $password = filter($con, $_POST["password"]);
@@ -80,7 +81,7 @@ if ($function == "edit") {
     $con->query("UPDATE user SET name = '$name', password = '$new_password', sex = '$sex', email = '$email', icon = '$icon' WHERE userid = '$userid'");
     check_sql_error($con);
     if ($changed_password) {
-        $con->query("DELETE * FROM token WHERE userid = '$userid'");
+        $con->query("DELETE FROM token WHERE userid = '$userid' AND token != '$token'");
         check_sql_error($con);
     }
 } else {

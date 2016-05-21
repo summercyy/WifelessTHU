@@ -118,7 +118,7 @@
 
 ###### 网址
 
-* /api/post.php
+* `/api/post.php`
 
 ###### 参数
 
@@ -133,7 +133,7 @@
 
 ###### 网址
 
-* /api/comment.php
+* `/api/comment.php`
 
 ###### 参数
 
