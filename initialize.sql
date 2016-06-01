@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `friends` (
   FOREIGN KEY (`first_name`) REFERENCES user(`name`),
   FOREIGN KEY (`second_name`) REFERENCES user(`name`),
   PRIMARY KEY (`first_name`, `second_name`)
-)
+);
 
 -- Token clearing schedule
 
