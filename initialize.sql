@@ -23,6 +23,16 @@ CREATE TABLE IF NOT EXISTS `token` (
   FOREIGN KEY (`userid`) REFERENCES user(`userid`)
 );
 
+-- Table structure for table `friends`
+
+CREATE TABLE IF NOT EXISTS `friends` (
+  `first_name` VARCHAR (32) NOT NULL,
+  `second_name` VARCHAR (32) NOT NULL,
+  FOREIGN KEY (`first_name`) REFERENCES user(`name`),
+  FOREIGN KEY (`second_name`) REFERENCES user(`name`),
+  PRIMARY KEY (`first_name`, `second_name`)
+)
+
 -- Token clearing schedule
 
 SET GLOBAL event_scheduler = 1;
