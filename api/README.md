@@ -114,16 +114,32 @@
 
 * `file_name` 头像文件名
 
-## 发表短动态
+## 发表动态
 
 ###### 网址
 
-* /api/send_post.php
+* `/api/post.php`
 
 ###### 参数
 
-* `description` 动态内容，限制在140个汉字。
+* `text` 动态内容
+* `images` 图片文件名数组，每一个文件名对应文件为 `/images/image/xxx.jpg`
 
 ###### 返回
 
-TODO 需要考虑加密吗？
+* 无
+
+## 发表评论
+
+###### 网址
+
+* `/api/comment.php`
+
+###### 参数
+
+* `postid` 动态id
+* `text` 评论内容，限制在255字节
+
+###### 返回
+
+* 无
