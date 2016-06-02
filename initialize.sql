@@ -23,21 +23,21 @@ CREATE TABLE IF NOT EXISTS `token` (
   FOREIGN KEY (`userid`) REFERENCES user(`userid`)
 );
 
--- Table structure for table `friends`
-
-CREATE TABLE IF NOT EXISTS `friends` (
-  `first_name` VARCHAR (32) NOT NULL,
-  `second_name` VARCHAR (32) NOT NULL,
-  FOREIGN KEY (`first_name`) REFERENCES user(`name`),
-  FOREIGN KEY (`second_name`) REFERENCES user(`name`),
-  PRIMARY KEY (`first_name`, `second_name`)
-);
-
 -- Token clearing schedule
 
 SET GLOBAL event_scheduler = 1;
 CREATE EVENT IF NOT EXISTS `clear_token` ON SCHEDULE EVERY 1 DAY
 DO DELETE FROM token WHERE TO_DAYS(NOW()) - TO_DAYS(latest_time) > 30;
+
+-- Table structure for table `friends`
+
+CREATE TABLE IF NOT EXISTS `friends` (
+  `first_userid` INTEGER NOT NULL,
+  `second_userid` INTEGER NOT NULL,
+  FOREIGN KEY (`first_userid`) REFERENCES user(`userid`),
+  FOREIGN KEY (`second_userid`) REFERENCES user(`userid`),
+  PRIMARY KEY (`first_userid`, `second_userid`)
+);
 
 -- Table structure for table `post`
 
