@@ -143,3 +143,105 @@
 ###### 返回
 
 * 无
+
+## 查看动态
+
+###### 网址
+
+* `/api/view_post.php`
+
+###### 参数
+
+* `postid` 动态id
+
+###### 返回
+
+* `post` 动态，包括`name` 发表用户姓名，`icon` 发表用户头像，`text` 状态内容，`image` 状态图片，`create_time` 发表时间
+* `comments` 评论数组，每个元素包括`name` 评论用户姓名，`icon` 评论用户头像， `text` 评论内容，`create_time` 发表时间
+
+## 查看某一用户好友
+
+###### 网址
+
+* `/api/view_friends.php`
+
+###### 参数
+
+* `viewing_userid` 用户id
+
+###### 返回
+
+* 数组，每个元素包括 `name` 好友姓名，`sex` 好友性别，`icon` 好友头像
+ 
+## 检查是否关注某一用户
+
+###### 网址
+
+* `/api/check_friends.php`
+
+###### 参数
+
+* `viewing_userid` 用户id
+
+###### 返回
+
+* true 已经关注 或 false 未关注
+ 
+## 关注用户
+
+###### 网址
+
+* `/api/follow.php`
+
+###### 参数
+
+* `tofollow_userid` 要关注的用户id
+
+###### 返回
+
+* 无
+ 
+## 推荐好友：我关注的人还关注
+
+###### 网址
+
+* `/api/recommend_friends_follow.php`
+
+###### 参数
+
+* 无
+
+###### 返回
+
+* 数组，每个元素包括 `name` 姓名，`sex` 性别，`icon` 头像
+* 按照好友中的关注数降序排列
+ 
+## 推荐好友：关注我的人还关注
+
+###### 网址
+
+* `/api/recommend_friends_fan.php`
+
+###### 参数
+
+* 无
+
+###### 返回
+
+* 数组，每个元素包括 `name` 姓名，`sex` 性别，`icon` 头像
+* 按照好友中的关注数降序排列
+
+## 查看某一用户动态
+
+###### 网址
+
+* `/api/view_user_posts.php`
+
+###### 参数
+
+* `start` 起始位置，从0开始
+* `per_time` 一次返回的动态数量
+
+###### 返回
+
+* 数组，每个元素包括 `text` 动态内容，`images` 图片，`comments_num` 评论数
