@@ -11,13 +11,8 @@ $con = db_connect();
 check_login($con);
 
 $userid = intval(filter($con, $_POST["userid"]));
-$name = filter($con, $_POST["name"]);
 
-if (strlen($name) == 0) {
-    report_error(ERROR_MISSING_PARAMETER);
-}
-
-$result = $con->query("SELECT * FROM friends, user WHERE friends.first_name = '$name' AND friends.second_name = user.name");
+$result = $con->query("SELECT * FROM friends, user WHERE friends.first_userid = '$userid' AND friends.second_userid = user.userid");
 check_sql_error($con);
 if (mysqli_affected_rows($con) == 0) {
     report_error(1, "该用户没有关注任何人");
