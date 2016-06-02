@@ -32,11 +32,11 @@ DO DELETE FROM token WHERE TO_DAYS(NOW()) - TO_DAYS(latest_time) > 30;
 -- Table structure for table `friends`
 
 CREATE TABLE IF NOT EXISTS `friends` (
-  `first_userid` INTEGER NOT NULL,
-  `second_userid` INTEGER NOT NULL,
-  FOREIGN KEY (`first_userid`) REFERENCES user(`userid`),
-  FOREIGN KEY (`second_userid`) REFERENCES user(`userid`),
-  PRIMARY KEY (`first_userid`, `second_userid`)
+  `fan_userid` INTEGER NOT NULL,
+  `followed_userid` INTEGER NOT NULL,
+  FOREIGN KEY (`fan_userid`) REFERENCES user(`userid`),
+  FOREIGN KEY (`followed_userid`) REFERENCES user(`userid`),
+  PRIMARY KEY (`fan_userid`, `followed_userid`)
 );
 
 -- Table structure for table `post`
