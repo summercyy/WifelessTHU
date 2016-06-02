@@ -1,22 +1,20 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: summe_000
- * Date: 2016/5/17
- * Time: 23:46
+ * 我关注的人还关注
+ * 按关注数降序排列
  */
 
 require_once 'api_utilities.php';
 $con = db_connect();
-//check_login($con);
+check_login($con);
 
 $userid = intval(filter($con, $_POST["userid"]));
-$userid = 1;
 
-$result = $con->query("SELECT user.* FROM friends, user WHERE friends.fan_userid = $userid AND friends.followed_userid = user.userid");
+$result = $con->query("SELECT DISTINCT user.*, COUNT(*) AS num FROM friends AS fri1, friends AS fri2, user WHERE fri1.fan_userid = $userid AND fri1.followed_userid = fri2.fan_userid AND fri2.followed_userid = user.userid AND user.userid NOT IN ($userid)GROUP BY user.userid ORDER BY num DESC");
+
 check_sql_error($con);
 if (mysqli_affected_rows($con) == 0) {
-    report_error(1, "该用户没有关注任何人");
+    report_error(1, "没有关注");
 }
 $return = array();
 while ($row = mysqli_fetch_array($result)) {
