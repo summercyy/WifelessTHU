@@ -24,15 +24,27 @@ if (strlen($text) > 65535) {
     report_error(2, "正文过长");
 }
 
-if (count(explode(" | ", $images)) > 9) {
+$imageArray = explode(" | ", $images);
+if (count($imageArray) > 9) {
     report_error(3, "图片数目过多");
 }
-foreach (explode(" | ", $images) as $image) {
+foreach ($imageArray as $image) {
     if (!is_random_string($image, 8)) {
         report_error(4, "图片名不正确");
     }
 }
 
-$con->query("INSERT INTO post (userid, text, images) VALUES ('$userid', '$text', '$images')");
+$con->autocommit(false);
+$con->query("INSERT INTO post (userid, text) VALUES ('$userid', '$text')");
 check_sql_error($con);
-report_success();
+
+$postid = mysqli_insert_id($con);
+if (count($imageArray) > 0) {
+    foreach ($imageArray as $image) {
+        $con->query("INSERT INTO post_images (postid, image) VALUES ('$postid', '$image')");
+        check_sql_error($con);
+    }
+}
+$con->autocommit(true);
+$con->commit();
+report_success(array("postid" => $postid));
