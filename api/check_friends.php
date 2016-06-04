@@ -14,11 +14,4 @@ $viewing_userid = intval(filter($con, $_POST["viewing_userid"]));
 
 $result = $con->query("SELECT * FROM friends WHERE friends.fan_userid = $userid AND friends.followed_userid = $viewing_userid");
 check_sql_error($con);
-if (mysqli_affected_rows($con) == 0) {
-    $return = false;
-}
-else {
-	$return = true;
-}
-
-report_success($return);
+report_success((mysqli_affected_rows($con) > 0));
