@@ -2,10 +2,9 @@
 
 require_once 'api_utilities.php';
 $con = db_connect();
-//check_login($con);
+check_login($con);
 
 $viewing_userid = intval(filter($con, $_POST["viewing_userid"]));
-$viewing_userid = 1;
 
 $result = $con->query("SELECT user.* FROM friends, user WHERE friends.followed_userid = $viewing_userid AND friends.fan_userid = user.userid");
 check_sql_error($con);
