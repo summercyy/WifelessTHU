@@ -23,6 +23,7 @@ $return["post"] = array(
 
 $result = $con->query("SELECT * FROM post_images WHERE postid = '$postid'");
 check_sql_error($con);
+$return["post"]["images"] = array();
 while ($row = mysqli_fetch_array($result)) {
 	array_push($return["post"]["images"], $row["image"]);
 }
