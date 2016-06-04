@@ -168,11 +168,28 @@
  * `text` 评论内容
  * `create_time` 发表时间
 
-## 查看某一用户好友
+## 查看某一用户关注的人
 
 ###### 网址
 
-* `/api/view_friends.php`
+* `/api/view_following.php`
+
+###### 参数
+
+* `viewing_userid` 用户id
+
+###### 返回
+
+* 数组，每个元素包括：
+ * `name` 好友姓名
+ * `sex` 好友性别
+ * `icon` 好友头像
+
+## 查看关注某一用户的人
+
+###### 网址
+
+* `/api/view_fans.php`
 
 ###### 参数
 
