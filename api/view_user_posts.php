@@ -24,10 +24,10 @@ $return = array();
 while ($row = mysqli_fetch_array($result)) {
     $postid = $row["postid"];
     $images = array();
-    $result = $con->query("SELECT * FROM post_images WHERE postid = '$postid'");
+    $image_result = $con->query("SELECT * FROM post_images WHERE postid = '$postid'");
     check_sql_error($con);
-    while ($row = mysqli_fetch_array($result)) {
-        array_push($images, $row["image"]);
+    while ($image_row = mysqli_fetch_array($image_result)) {
+        array_push($images, $image_row["image"]);
     }
     array_push($return, array(
         "postid" => $postid,

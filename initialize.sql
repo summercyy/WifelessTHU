@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `post` (
 
 CREATE TABLE IF NOT EXISTS `post_images` (
   `postid` BIGINT NOT NULL,
-  `image` VARCHAR(128) NOT NULL,
+  `image` VARCHAR(128) NOT NULL PRIMARY KEY,
   FOREIGN KEY (`postid`) REFERENCES post(`postid`)
 );
 
