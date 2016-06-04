@@ -22,10 +22,20 @@ if ($count == 0) {
 
 $return = array();
 while ($row = mysqli_fetch_array($result)) {
+    $postid = $row["postid"];
+    $images = array();
+    $result = $con->query("SELECT * FROM post_images WHERE postid = '$postid'");
+    check_sql_error($con);
+    while ($row = mysqli_fetch_array($result)) {
+        array_push($images, $row["image"]);
+    }
     array_push($return, array(
+        "postid" => $postid,
         "text" => $row["text"],
-        "images" => $row["images"],
+        "images" => $images,
+        "create_time" => $row["create_time"],
         "comments_num" => $row["num"],
     ));
 }
+
 report_success($return);
