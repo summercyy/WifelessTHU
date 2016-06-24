@@ -22,14 +22,15 @@
 <body class="login-content ng-scope" data-ng-controller="loginCtrl as lctrl" youdao="bind">
 
 <div class="lc-block" id="l-login" data-ng-class="{&#39;toggled&#39;:lctrl.login === 1}">
-    <h1 class="lean">Azrael</h1>
+    <h1 class="lean">登陆</h1>
 
     <div class="input-group m-b-20">
     		<span class="input-group-addon">
     			<i class="zmdi zmdi-account"></i>
     		</span>
         <div class="fg-line fg-toggled has-error">
-            <input type="text" class="form-control" placeholder="Username" regex="^\w{3,16}$">
+            <input type="text" class="form-control" placeholder="Username" id="loginUserName" regex="^\w{3,16}$">
+            <input name="type" value="Web" style="display: none" id="loginType">
         </div>
     </div>
 
@@ -38,13 +39,14 @@
     			<i class="zmdi zmdi-male"></i>
     		</span>
         <div class="fg-line fg-toggled has-error">
-            <input type="password" class="form-control" placeholder="Password" regex="^\w+">
+            <input type="password" class="form-control" placeholder="Password" id="loginPassword" regex="^\w+">
         </div>
     </div>
 
     <div class="clearfix"></div>
 
-    <div class="checkbox">
+    <div class="checkbox" style="display: none">
+<!--    TODO 保持登陆状态功能    -->
         <label>
             <input type="checkbox" value="">
             <i class="input-helper">
@@ -53,9 +55,9 @@
         </label>
     </div>
 
-    <a href="http://www.17sucai.com/preview/207728/2016-01-07/login/index.html" class="btn btn-login btn-danger btn-float">
+    <div onclick=" postLoginAjax();"        class="btn btn-login btn-danger btn-float">
         <i class="zmdi zmdi-arrow-forward"></i>
-    </a>
+    </div>
 
     <ul class="login-navigation">
         <li class="bgm-red" data-ng-click="lctrl.login = 0; lctrl.register = 1">Register</li>
@@ -91,7 +93,7 @@
     			<i class="zmdi zmdi-account"></i>
     		</span>
         <div class="fg-line">
-            <input type="text" class="form-control" placeholder="Username" regex="^\w{3,16}$"/>
+            <input type="text" class="form-control" placeholder="Username" id="regUsername" regex="^\w{3,16}$"/>
         </div>
     </div>
 
@@ -100,7 +102,7 @@
     			<i class="zmdi zmdi-email"></i>
     		</span>
         <div class="fg-line">
-            <input type="text" class="form-control" placeholder="Email Address" regex="^\w+@\w+\.[a-zA-Z]+(\.[a-zA-Z]+)?$"/>
+            <input type="text" class="form-control" placeholder="Email Address" id="regEmail" regex="^\w+@\w+\.[a-zA-Z]+(\.[a-zA-Z]+)?$"/>
         </div>
     </div>
 
@@ -109,7 +111,7 @@
     			<i class="zmdi zmdi-male"></i>
     		</span>
         <div class="fg-line">
-            <input type="password" class="form-control" placeholder="Password" regex="^\w+"/>
+            <input type="password" class="form-control" placeholder="Password" id="regPassword" regex="^\w+"/>
         </div>
     </div>
 
@@ -123,7 +125,7 @@
         </label>
     </div>
 
-    <a href="" class="btn btn-login btn-danger btn-float"><i class="zmdi zmdi-arrow-forward"></i></a>
+    <div onclick="alert('hello to reg'); postReg2();" class="btn btn-login btn-danger btn-float"><i class="zmdi zmdi-arrow-forward"></i></div>
 
     <ul class="login-navigation">
         <li data-block="#l-login" class="bgm-green" data-ng-click="lctrl.register = 0; lctrl.login = 1">Login</li>
@@ -161,4 +163,73 @@
 
 <!-- Template Modules -->
 <script src="./Material Admin_files/form.js"></script>
-</body></html>
+
+<!-- md5 加密相关-->
+<!--<script src="./js/md5.js"></script>-->
+
+<script>
+    // 用户登录
+    function postLogin(){
+        var myform = document.createElement("form");
+        myform.method = "post";
+        myform.action = "/api/login.php";
+        var userNameInput = document.createElement("input");
+        userNameInput.setAttribute("name", "name");
+//        console.log(document.getElementById("loginUserName").innerText);
+        userNameInput.setAttribute("value", document.getElementById("loginUserName").value);
+        myform.appendChild(userNameInput);
+        var passwordInput = document.createElement("input");
+        passwordInput.setAttribute("name", "password");
+        passwordInput.setAttribute("value", document.getElementById("loginPassword").value);
+        myform.appendChild(passwordInput);
+        myform.appendChild(genInputNode("type","Web"));
+        myform.submit();
+//        document.body.removeChild(myform);
+    }
+    /**
+     * 使用ajax实现的异步登陆
+     */
+    function postLoginAjax(){
+        $.post("./api/login.php", {
+            "name":  document.getElementById("loginUserName").value,
+            "password": document.getElementById("loginPassword").value,
+            "type": "Web"
+        }, function(data){
+            var dataObj = JSON.parse(data);
+            switch (dataObj.code){
+                case 0:
+                    window.location.href = "homepage.php?token=" + dataObj.data.token + "&userid=" + dataObj.data.userid;
+                    break;
+                default:
+                    alert("登陆失败，请检查用户名和密码！错误码：" + dataObj.code);
+                    console.log("data received: " + data);
+                    break;
+            }
+
+        })
+    }
+</script>
+<script>
+    // 用户注册
+    function postReg2(){
+        var myform = document.createElement("form");
+        myform.method = "post";
+        myform.action = "/api/register.php";
+        myform.appendChild(genInputNode("name", document.getElementById("regUsername").value));
+        myform.appendChild(genInputNode("email", document.getElementById("regEmail").value));
+        myform.appendChild(genInputNode("password", document.getElementById("regPassword").value));
+        myform.appendChild(genInputNode("type", "Web");
+        myform.submit();
+    }
+</script>
+<script>
+    function genInputNode(nodeName, nodeValue){
+        var node = document.createElement("input");
+        node.setAttribute("name", nodeName);
+        node.setAttribute("value", nodeValue);
+        return node;
+    }
+</script>
+</body>
+
+</html>
