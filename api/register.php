@@ -57,18 +57,18 @@ if ($function == "edit") {
     }
 }
 
-$result = $con->query("SELECT * FROM user WHERE name = '$name'");
+$result = $con->query("SELECT * FROM user WHERE name = '$name' AND userid != '$userid'");
 check_sql_error($con);
 $result = mysqli_fetch_array($result);
-if (!($function == "edit" && $userid == $result["userid"]) && mysqli_affected_rows($con) > 0) {
+if ($function != "edit" && mysqli_affected_rows($con) > 0) {
     report_error(7, "该用户名已被注册");
 }
 
 if (strlen($email) > 0) {
-    $result = $con->query("SELECT * FROM user WHERE email = '$email'");
+    $result = $con->query("SELECT * FROM user WHERE email = '$email' AND userid != '$userid'");
     check_sql_error($con);
     $result = mysqli_fetch_array($result);
-    if (!($function == "edit" && $userid == $result["userid"]) && mysqli_affected_rows($con) > 0) {
+    if ($function != "edit" && mysqli_affected_rows($con) > 0) {
         report_error(8, "该邮箱已被注册");
     }
 }
