@@ -22,12 +22,15 @@
     <div class="mdl-card on-the-road-again mdl-cell mdl-cell--8-col" style="width: 640px; top: 220px;" align="left">
         <div class="mdl-color-text--grey-600 mdl-card__supporting-text">{{post_records.text}}</div>
         <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-            <div class="minilogo" style="float: left"><img src="{{post_records.icon}}" width="50px" height="50px"></div>
-            <div><strong>{{post_records.name}}</strong>
-                <span>{{post_records.create_time}}</span>
-            </div>
+            <div class="minilogo" style="float: left; margin-right: 5px"><img src="{{post_records.icon}}" width="50px" height="50px"></div>
             <div>
-                <div>评论</div>
+            <div><strong>{{post_records.name}}</strong><br>
+                <span>{{post_records.create_time}}</span><br>
+            </div>
+
+                <div>
+                    <br>
+                <div>评论：</div>
                 <ul>
                     <li ng-repeat="x in comments_records">
                         <div>{{x.name}}  说：{{x.text}}</div>
@@ -37,6 +40,7 @@
                 <form onsubmit="submitForm()" enctype="application/x-www-form-urlencoded">
                     <div>发表评论</div>
                     <input name="text" id="commentText">
+                    <button type="submit">发表</button>
                     <script>
                         function submitForm() {
                             $.post("../api/comment.php",{
@@ -57,6 +61,7 @@
                         }
                     </script>
                 </form>
+                </div>
             </div>
         </div>
     </div>
@@ -82,7 +87,9 @@
         }
         $.post("../api/view_post.php", {"userid":  userid, "token": token, "postid": postid}, function(data){console.log("in getPost: " + data); postData = data;})
         var post_obj = JSON.parse(postData);
-        console.log("in getPost: " + postData);
+//        console.log("in getPost: " + postData);
+        // 处理数据中的icon链接
+        post_obj.data.post.icon = processIconStr(post_obj.data.post.icon);
         return post_obj.data;
     }
 </script>
@@ -99,6 +106,7 @@
         return "<?PHP  if(!empty($_REQUEST['postid'])) echo $_REQUEST['postid'];?>";
     }
 </script>
+<script src="../js/processIconStr.js"></script>
 
 </div>
 </body>

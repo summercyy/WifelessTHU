@@ -18,7 +18,7 @@ function addOneCard(cardDataObject) {
                 cardDataObject.text +  // 此处存放文字
                 '</div>' +
                 '<div class="mdl-card__supporting-text meta mdl-color-text--grey-600">'+
-                '<div class="minilogo"></div> '+
+                '<div class="minilogo"><img src="' + processIconStr(cardDataObject.icon) + '" width="45px", height="45px"></div> '+
                 '<div>'+
                 '<strong>' + cardDataObject.name + '</strong>'+  // 发布者名称
                 '<span>' + cardDataObject.create_time + '</span>'+ //发布时间
@@ -32,7 +32,7 @@ function addOneCard(cardDataObject) {
         case "textAndImage":
             cardData1.innerHTML ='<div class="mdl-card on-the-road-again mdl-cell mdl-cell--8-col" style="width: 640px">' +  //TODO 解决宽度不能自适应的问题
                 '<div class="mdl-card__title mdl-color-text--grey-50" style="background: url('+
-                cardDataObject.imageUrl + //最好是绝对路径，否则可能找不到
+                '' + //最好是绝对路径，否则可能找不到
                 ')">'+
                 '</div>'+
                 '<div class="mdl-color-text--grey-600 mdl-card__supporting-text">' +
