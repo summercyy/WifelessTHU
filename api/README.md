@@ -312,3 +312,21 @@
  * `create_user_name` 动态发表用户姓名
  * `create_user_icon` 动态发表用户头像
  * `comments_num` 评论数
+
+
+  ## 查看两步好友路径
+
+###### 网址
+
+* `/api/tow_step_friend.php`
+
+###### 参数
+
+* `target_username` 目标用户名
+
+###### 返回
+
+* 数组，每个元素代表一个中间用户a（我关注a，a关注目标用户），包括：
+ * `name` 姓名
+ * `sex` 性别
+ * `icon` 头像
