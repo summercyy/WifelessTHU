@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <script src="./js/angular.js"></script>
     <script src="./js/jquery-1.12.4.js"></script>
+    <script src="./js/cookieAPI.js"></script>
 </head>
 <body>
 <div ng-app="showFans" ng-controller="showFansController">
@@ -16,11 +17,14 @@
 </li>
 </ul>
 <script type="text/javascript">
+    $.ajaxSetup({
+        async: false
+    });
     var fansData;
     function getFans(){
-        userid = 1;
-        token = 111;
-        viewing_userid = 1;
+        userid = getCookie("userid");
+        token = getCookie("token");
+        viewing_userid = userid;
         $.post("./api/view_fans.php", {"userid":  userid, "token": token, "viewing_userid": viewing_userid}, function(data){console.log("in getFans: " + data); fansData = data;})
         var fans_obj = JSON.parse(fansData);
         return fans_obj.data
