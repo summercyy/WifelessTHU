@@ -36,6 +36,7 @@
             <div class="mdl-card coffee-pic mdl-cell mdl-cell--8-col">
                 <div class="mdl-card__media mdl-color-text--grey-50">
                     <h3>发表动态</h3>
+                    <iframe allowtransparency="true" frameborder="0" width="410" height="64" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=3&t=1&v=2&d=2&bd=0&k=&f=&q=0&e=1&a=1&c=54511&w=410&h=64&align=center"></iframe>
                 </div>
                 <div class="mdl-card__media mdl-color-text--grey-50">
                     <form action="../api/post.php" method="post" enctype="application/x-www-form-urlencoded">
