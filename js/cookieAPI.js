@@ -1,5 +1,6 @@
 function saveCookie(cookieName, cookieValue){
-    document.cookie = cookieName + "=" + cookieValue ;
+    var aliveTime = 7 * 24 * 60 * 60;
+    document.cookie = cookieName + "=" + cookieValue + ";max-age=" + aliveTime;
 }
 
 function getCookie(c_name) {

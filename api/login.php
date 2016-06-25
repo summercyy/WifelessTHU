@@ -36,7 +36,7 @@ if (mysqli_affected_rows($con) == 0) {
     report_error(1, "用户名不存在");
 }
 $result = mysqli_fetch_array($result);
-if (strtoupper($password) != strtoupper($result["password"])) {
+if (strtoupper(md5($password)) != strtoupper($result["password"])) {
     report_error(2, "密码错误");
 }
 
