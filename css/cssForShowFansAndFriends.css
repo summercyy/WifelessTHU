@@ -1,0 +1,13 @@
+.userInfoCard .userName{
+    text-align: center; margin-top: 5px; margin-bottom: 5px;
+}
+.userInfoCard .userIcon{
+    text-align: center; padding-top: 5px;
+}
+.userInfoCard{
+    /*background: black;*/
+    box-shadow: 3px 3px 8px #000000;
+}
+h1{
+    text-align: center;
+}
