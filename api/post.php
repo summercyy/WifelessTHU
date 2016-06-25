@@ -24,13 +24,16 @@ if (strlen($text) > 65535) {
     report_error(2, "正文过长");
 }
 
-$imageArray = explode(" | ", $images);
-if (count($imageArray) > 9) {
-    report_error(3, "图片数目过多");
-}
-foreach ($imageArray as $image) {
-    if (!is_random_string($image, 8)) {
-        report_error(4, "图片名不正确");
+$imageArray = array();
+if (strlen($images) > 0) {
+    $imageArray = explode(" | ", $images);
+    if (count($imageArray) > 9) {
+        report_error(3, "图片数目过多");
+    }
+    foreach ($imageArray as $image) {
+        if (!is_random_string($image, 8)) {
+            report_error(4, "图片名不正确");
+        }
     }
 }
 
