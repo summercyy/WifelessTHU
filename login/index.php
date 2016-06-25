@@ -17,13 +17,13 @@
     -->
     <link rel="shortcut icon" type="image/x-icon" href="http://www.17sucai.com/preview/207728/2016-01-07/login/favicon.ico">
     <!-- Vendor CSS -->
-    <link href="./Material Admin_files/material-design-iconic-font.min.css" rel="stylesheet" type="text/css">
+    <link href="../Material Admin_files/material-design-iconic-font.min.css" rel="stylesheet" type="text/css">
     <!-- CSS -->
-    <link href="./Material Admin_files/app.min.1.css" rel="stylesheet" type="text/css">
+    <link href="../Material Admin_files/app.min.1.css" rel="stylesheet" type="text/css">
     <style type="text/css"></style>
-    <script src="./Material Admin_files/jquery.min.js"></script>
-    <script src="./js/jquery.form.js"></script>
-    <script src="./js/cookieAPI.js"></script>
+    <script src="../Material Admin_files/jquery.min.js"></script>
+    <script src="../js/jquery.form.js"></script>
+    <script src="../js/cookieAPI.js"></script>
 </head>
 <body class="login-content ng-scope" data-ng-controller="loginCtrl as lctrl" youdao="bind">
 
@@ -140,35 +140,35 @@
 </div>
 
 
-<script src="./Material Admin_files/log.js"></script>
+<script src="../Material Admin_files/log.js"></script>
 <!-- Angular -->
-<script src="./Material Admin_files/angular.min.js"></script>
-<script src="./Material Admin_files/angular-resource.min.js"></script>
-<script src="./Material Admin_files/angular-animate.min.js"></script>
+<script src="../Material Admin_files/angular.min.js"></script>
+<script src="../Material Admin_files/angular-resource.min.js"></script>
+<script src="../Material Admin_files/angular-animate.min.js"></script>
 
 
 <!-- Angular Modules -->
-<script src="./Material Admin_files/angular-ui-router.min.js"></script>
-<script src="./Material Admin_files/loading-bar.js"></script>
-<script src="./Material Admin_files/ocLazyLoad.min.js"></script>
-<script src="./Material Admin_files/ui-bootstrap-tpls.min.js"></script>
+<script src="../Material Admin_files/angular-ui-router.min.js"></script>
+<script src="../Material Admin_files/loading-bar.js"></script>
+<script src="../Material Admin_files/ocLazyLoad.min.js"></script>
+<script src="../Material Admin_files/ui-bootstrap-tpls.min.js"></script>
 
 <!-- Common js -->
-<script src="./Material Admin_files/nouislider.min.js"></script>
-<script src="./Material Admin_files/ng-table.min.js"></script>
+<script src="../Material Admin_files/nouislider.min.js"></script>
+<script src="../Material Admin_files/ng-table.min.js"></script>
 
 <!-- Placeholder for IE9 -->
 <!--[if IE 9 ]>
-<script src="js/bower_components/jquery-placeholder/jquery.placeholder.min.js"></script>
+<script src="../js/bower_components/jquery-placeholder/jquery.placeholder.min.js"></script>
 <![endif]-->
 <!-- App level -->
-<script src="./Material Admin_files/app.js"></script>
-<script src="./Material Admin_files/main.js"></script>
-<script src="./Material Admin_files/ui-bootstrap.js"></script>
+<script src="../Material Admin_files/app.js"></script>
+<script src="../Material Admin_files/main.js"></script>
+<script src="../Material Admin_files/ui-bootstrap.js"></script>
 
 
 <!-- Template Modules -->
-<script src="./Material Admin_files/form.js"></script>
+<script src="../Material Admin_files/form.js"></script>
 
 <!-- md5 加密相关-->
 <!--<script src="./js/md5.js"></script>-->
@@ -179,7 +179,7 @@
      * 使用ajax实现的异步登陆
      */
     function postLoginAjax(){
-        $.post("./api/login.php", {
+        $.post("../api/login.php", {
             "name":  document.getElementById("loginUserName").value,
             "password": document.getElementById("loginPassword").value,
             "type": "Web"
@@ -191,7 +191,7 @@
                     saveCookie("token", dataObj.data.token);
                     saveCookie("userid", dataObj.data.userid);
                     alert("登陆成功");
-                    window.location.href = "homepage.php?token=" + dataObj.data.token + "&userid=" + dataObj.data.userid;
+                    window.location.href = "../homepage";
                     break;
                 default:
                     alert("登陆失败，请检查用户名和密码！错误码：" + dataObj.code + "    错误信息：" + dataObj.message);
@@ -204,7 +204,7 @@
 </script>
 <script>
     function postRegAjax() {
-        $.post("./api/register.php", {
+        $.post("../api/register.php", {
             "name": document.getElementById("regUsername").value,
             "email": document.getElementById("regEmail").value,
             "password": document.getElementById("regPassword").value,
@@ -225,7 +225,7 @@
 
         saveCookie("token", dataObj.data.token);
         saveCookie("userid", dataObj.data.userid);
-        var toURL = "./homepage.php";
+        var toURL = "../homepage";
         console.log("toURL: " + toURL);
         alert("注册成功！"); // TODO 优化这些提示的显示方式
         // 跳转
