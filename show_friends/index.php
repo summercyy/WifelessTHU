@@ -11,7 +11,7 @@
     <script src="../js/cookieAPI.js"></script>
     <link rel="stylesheet" href="../css/cssForShowFansAndFriends.css">
 </head>
-<body>
+<body background="../bg.jpg">
 <div ng-app="showFriends" ng-controller="showFriendsController">
 
     <h1>我关注的人</h1>

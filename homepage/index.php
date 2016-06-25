@@ -73,16 +73,15 @@
         <div class="demo-blog__posts mdl-grid">
             <div class="mdl-card coffee-pic mdl-cell mdl-cell--8-col">
                 <div class="mdl-card__media mdl-color-text--grey-50">
-<!--                    <form action="./test/echoRequest.php" method="post">-->
+                    <h3>发表动态</h3>
+                </div>
+                <div class="mdl-card__media mdl-color-text--grey-50">
                     <form action="../api/post.php" method="post" enctype="application/x-www-form-urlencoded">
-                        想说点什么？<input type="text" name="text" title="想要发布的内容" class="mdl-cell--8-col" >
-                        <div id="imageUploadArea" style="background: black">拖拽到此处以上传图片</div>
+                        <input type="text" name="text" placeholder="想说点什么？" class="mdl-cell--8-col" style="height: 60px; width: 200px;; font-size: medium">
+                        <input type="submit" name="发布" style="height: 44px;">
                         <input name="token" id="tokenStore" value="" style="display: none">
                         <input name="userid" id="useridStore" value="" style="display: none">
-                        <input name="images" value="">
-                        <input type="submit" name="发布">
                     </form>
-                    <h3>发表框</h3>
                 </div>
                 <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
                     <div class="minilogo"></div>
@@ -108,10 +107,9 @@
                         <input id="search_user" style="height: 25px;font-size:small" placeholder="搜索用户" onkeydown="enterHandler(window.event);" />
                     </div>
                     <ul class="mdl-menu mdl-js-menu mdl-menu--top-left mdl-js-ripple-effect" for="menubtn">
-                        <li class="mdl-menu__item">About</li>
-                        <li class="mdl-menu__item">Message</li>
-                        <li class="mdl-menu__item">Favorite</li>
-                        <li class="mdl-menu__item">Search</li>
+                        <li class="mdl-menu__item" onclick="window.open('../show_friends')">我关注的人</li>
+                        <li class="mdl-menu__item" onclick="window.open('../show_fans')">关注我的人</li>
+                        <li class="mdl-menu__item" onclick="window.open('../about')">关于</li>
                     </ul>
                     <button id="menubtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                         <i class="material-icons" role="presentation" style="font-size: small">更多</i>
@@ -404,6 +402,7 @@
             : event.charCode;
         if (keyCode == 13) { // 回车
             var searchname = document.getElementById("search_user").value;
+            document.getElementById("search_user").value = "";
             window.open("../view_user/?name=" + searchname);
         }
     }
