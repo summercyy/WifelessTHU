@@ -12,15 +12,15 @@
 require_once 'api_utilities.php';
 $con = db_connect();
 
-$token = filter($con, $_POST["token"]);
-$userid = intval(filter($con, $_POST["userid"]));
+@$token = filter($con, $_POST["token"]);
+@$userid = intval(filter($con, $_POST["userid"]));
 $name = filter($con, $_POST["name"]);
 $password = filter($con, $_POST["password"]);
-$new_password = filter($con, $_POST["new_password"]);
+@$new_password = filter($con, $_POST["new_password"]);
 $sex = filter($con, $_POST["sex"]);
 $email = filter($con, $_POST["email"]);
 $icon = filter($con, $_POST["icon"]);
-$function = filter($con, $_POST["function"]);
+@$function = filter($con, $_POST["function"]);
 
 if ($function == "edit") {
     check_login($con);
@@ -93,6 +93,6 @@ if ($function == "edit") {
     report_success();
 } else {
     $type = filter($con, $_POST["type"]);
-    $result = request_post("/login.php", array("name" => $name, "password" => $password, "type" => $type));
+    @$result = request_post("/login.php", array("name" => $name, "password" => $password, "type" => $type));
     report_success(array("userid" => $result["data"]["userid"], "token" => $result["data"]["token"], "name" => $result["data"]["name"]));
 }
