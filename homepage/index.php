@@ -404,7 +404,7 @@
             : event.charCode;
         if (keyCode == 13) { // 回车
             var searchname = document.getElementById("search_user").value;
-            window.location.href = "../view_user/?name=" + searchname;
+            window.open("../view_user/?name=" + searchname);
         }
     }
 </script>
