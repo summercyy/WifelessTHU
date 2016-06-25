@@ -310,10 +310,10 @@
         var data = JSON.parse(jsondata);
         console.log("in addroutefromjson" + JSON.stringify(data.data));
         if (data.code != 0) return false;
-        var routeHTML = "你";
+        var routeHTML = "";
         for (var i = 0; i < Math.min(data.data.length, 4); i++) {
             routeData = data.data[i];
-            routeHTML += " → " + routeData["name"];
+            routeHTML += "你 → " + routeData["name"] + " → <?php echo $name; ?><br />";
         }
         if (routeHTML.length == 0) {
             routeHTML = "该用户不是您两步以内的好友";
