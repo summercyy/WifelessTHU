@@ -450,6 +450,7 @@
      * 如果有的话就更新页面中的提示信息
      */
     function checkNewPost() {
+        console.log("checkNewPost called");
         var thisID = checkLatestPostID();
         if(thisID > previousLatestPostID){
             previousLatestPostID = thisID;
@@ -460,6 +461,7 @@
             return false;
         }
     }
+    setInterval(checkNewPost, 30000);
 
 </script>
 
