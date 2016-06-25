@@ -316,7 +316,10 @@
     function addRecommend(jsondata) {
         var data = JSON.parse(jsondata);
         console.log("in addrecommendfromjson" + JSON.stringify(data.data));
-        if (data.code != 0) return false;
+        if (data.code != 0) {
+            document.getElementById("recommend_friends").innerHTML = "加载用户推荐失败";
+            return false;
+        }
         var recommendHTML = "";
         for (var i = 0; i < Math.min(data.data.length, 4); i++) {
             recommendData = data.data[i];
