@@ -219,7 +219,7 @@
     function processRegData(data){
         var dataObj = JSON.parse(data);
         if(dataObj.code != 0){
-            alert("注册出现错误，请重新注册。错误代码：" + dataObj.code);
+            alert("注册出现错误，请重新注册。错误代码：" + dataObj.code + "    错误信息：" + dataObj.message);
             return false;
         }
 
