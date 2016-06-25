@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<!-- 显示当前登陆用户的好友-->
+<!-- 显示当前用户关注的人
+需要以get方式提供 user_to_view 参数
+-->
 <html>
 <head>
     <title>我关注的人</title>
@@ -26,12 +28,17 @@
         async: false
     });
     var friendsData;
-    function getFriends(){
+    function getFriends(user_to_view){
         userid = getCookie("userid");
         token = getCookie("token");
-        viewing_userid = 1;
+        viewing_userid = userid;
+        if(user_to_view){
+            if(user_to_view.length > 0){
+                viewing_userid = user_to_view;
+            }
+        }
         $.post("../api/view_following.php", {"userid":  userid, "token": token, "viewing_userid": viewing_userid}, function(data){friendsData = data;})
-//        console.log("in getFriends, friendsData: " + friendsData);
+        console.log("in getFriends, friendsData: " + friendsData);
         var friends_obj = JSON.parse(friendsData);
         if(friends_obj.code != 0){
             alert("获取  关注的人  的信息出现错误，错误码：" + friends_obj.code + "   错误信息：" + friends_obj.message);
@@ -47,14 +54,14 @@
                 friends_obj.data[i].icon = "../images/icon/default.png";
             }
         }
-        console.log("in getFriends, check icon url:" + JSON.stringify(fans_obj.data));
+        console.log("in getFriends, check icon url:" + JSON.stringify(friends_obj.data));
         return friends_obj.data
     }
 </script>
 <script>
     var app = angular.module("showFriends", []);
     app.controller("showFriendsController", function($scope) {
-        $scope.records = getFriends(); 
+        $scope.records = getFriends("<?php if(!empty($_REQUEST['user_to_view'])) echo $_REQUEST['user_to_view']?>");
     });
 </script>
 

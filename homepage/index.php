@@ -283,13 +283,13 @@
     isAddSuccessful = true;
     function autoload(startIndex) {
         $.ajaxSetup({async: false});
-        $.post("../api/view_user_posts.php",
+        $.post("../api/view_friends_posts.php",
             {
                 "token": getCookie("token"),
                 "userid": getCookie("userid"),
                 "start": startIndex,
-                "per_time":itermsPertime,
-                "viewing_userid": getCookie("userid")
+                "per_time":itermsPertime
+//                "viewing_userid": getCookie("userid")
             },
             function(data){console.log("dataLoaded: " + data); isAddSuccessful = addCardFromJson(data)});  // 添加type参数为application/x-www-form-urlencoded后就会出现问题，不知道为什么
         console.log("isAddSuccessful: " + isAddSuccessful);
