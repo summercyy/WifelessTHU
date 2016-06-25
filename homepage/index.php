@@ -45,13 +45,7 @@
                         <input name="userid" id="useridStore" value="" style="display: none">
                     </form>
                 </div>
-                <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-                    <div class="minilogo"></div>
-                    <div>
-                        <strong>The Newist</strong>
-                        <span>2 days ago</span>
-                    </div>
-                </div>
+
             </div>
             <div class="mdl-card something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop">
                 <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent" onclick=" addFriend('');">
@@ -80,7 +74,7 @@
                 </div>
             </div>
             <button id="haveNewPost" onclick="location.reload(true)" style="display: none">主人，您有新动态了~~ 点我刷新</button>
-            <div id="postsContainer" >这是存储状态的位置</div>
+            <div id="postsContainer">  </div>
             <button id="loadMore" onclick="loadMore()">加载更多</button>
 
     </main>
@@ -116,11 +110,11 @@
         var cardData = document.createElement("div");
         cardData.innerHTML ='<div class="mdl-card on-the-road-again mdl-cell mdl-cell--8-col" style="width: 640px" id="waitingCard">' +
             '<div class="mdl-color-text--grey-600 mdl-card__supporting-text">' +
-            '加载中，请稍候' +  // 此处存放文字
+            'TA有点懒，什么也没说过 >_<' +  // 此处存放文字
             '</div>' +
             '<div class="mdl-card__supporting-text meta mdl-color-text--grey-600">'+
             '<div class="minilogo"></div> '+
-            '<div>'+
+            '<div>'+1
             '<strong>' +  ' ' + '</strong>'+  // 发布者名称
             '<span> </span>'+
             '</div>'+
