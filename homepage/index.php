@@ -39,8 +39,8 @@
                 </div>
                 <div class="mdl-card__media mdl-color-text--grey-50">
                     <form action="../api/post.php" method="post" enctype="application/x-www-form-urlencoded">
-                        <input type="text" name="text" placeholder="想说点什么？" class="mdl-cell--8-col" style="height: 60px; width: 200px;; font-size: medium">
-                        <input type="submit" name="发布" style="height: 44px;">
+                        <input type="text" name="text" placeholder="想说点什么？" class="mdl-cell--8-col" style="height: 80px; width: 450px;; font-size: medium">
+                        <input type="submit" value="发表">
                         <input name="token" id="tokenStore" value="" style="display: none">
                         <input name="userid" id="useridStore" value="" style="display: none">
                     </form>
