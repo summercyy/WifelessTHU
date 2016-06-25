@@ -23,6 +23,7 @@
     <style type="text/css"></style>
     <script src="./Material Admin_files/jquery.min.js"></script>
     <script src="./js/jquery.form.js"></script>
+    <script src="./js/cookieAPI.js"></script>
 </head>
 <body class="login-content ng-scope" data-ng-controller="loginCtrl as lctrl" youdao="bind">
 
@@ -202,7 +203,11 @@
         }, function(data){
             var dataObj = JSON.parse(data);
             switch (dataObj.code){
-                case 0:
+                case 0:   // 登陆成功
+                    // 设置cookie
+                    saveCookie("token", dataObj.data.token);
+                    saveCookie("userid", dataObj.data.userid);
+                    alert("cookie saved!");
                     window.location.href = "homepage.php?token=" + dataObj.data.token + "&userid=" + dataObj.data.userid;
                     break;
                 default:

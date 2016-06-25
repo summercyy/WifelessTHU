@@ -34,6 +34,7 @@ $userID = $_REQUEST["userid"];
         }
     </style>
     <script src="./js/jquery-1.12.4.js"></script>
+    <script src="./js/cookieAPI.js"></script>
 </head>
 <body>
 <!--用于在网页中存放用户信息-->
@@ -105,7 +106,7 @@ $userID = $_REQUEST["userid"];
                 </div>
             </div>
             <div class="mdl-card something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop">
-                <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent" onclick="alert('addFriendClicked'); addFriend();">
+                <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent" onclick=" addFriend();">
                     <i class="material-icons mdl-color-text--white" role="presentation">add</i>
                     <span class="visuallyhidden">add</span>
                 </button>
@@ -386,6 +387,39 @@ $userID = $_REQUEST["userid"];
             $.post("./api/")
         }
     }
+</script>
+
+<script>
+    /**
+     * 添加好友：从当前的登陆用户发出添加好友申请到
+     */
+    // 从url中获取参数
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
+    function addFriend() {
+        var userid = getCookie("userid");
+        var token = getCookie("token");
+        $.post("./api/follow.php", {
+            "userid": userid, 
+            "token": token,
+            "tofollow_userid": userid
+        },function (data) {
+            console.log("in addFriend: " + data);
+            var dataObj = JSON.parse(data);
+            if(dataObj.code == 0) {
+                alert("关注成功！");
+            }else{
+                alert("操作错误！错误码：" + dataObj.code + "     提示信息：" + dataObj.message);
+            }
+            
+            }
+        )
+    }
+
 </script>
 
 </html>
