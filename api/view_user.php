@@ -17,7 +17,7 @@ $userid = intval(filter($con, $_POST["userid"]));
 $viewing_userid = intval(filter($con, $_POST["viewing_userid"]));
 $name = filter($con, $_POST["name"]);
 
-if (strlen($name) == 0) {
+if (strlen($name) == 0 && $viewing_userid == 0) {
     report_error(ERROR_MISSING_PARAMETER);
 }
 
