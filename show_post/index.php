@@ -17,9 +17,9 @@
 
 <body background="../bg.jpg">
 
-<div ng-app="showPost" ng-controller="showPostController">
+<div ng-app="showPost" ng-controller="showPostController" align="center">
 
-    <div class="mdl-card on-the-road-again mdl-cell mdl-cell--8-col" style="width: 640px">
+    <div class="mdl-card on-the-road-again mdl-cell mdl-cell--8-col" style="width: 640px; top: 220px;" align="left">
         <div class="mdl-color-text--grey-600 mdl-card__supporting-text">{{post_records.text}}</div>
         <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
             <div class="minilogo" style="float: left"><img src="{{post_records.icon}}" width="50px" height="50px"></div>
