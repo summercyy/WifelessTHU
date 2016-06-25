@@ -1,5 +1,20 @@
 <?php
-$user_to_view = $_REQUEST['user_to_view'];
+    $name = $_GET['name'];
+    function name_to_userid($name, $post) {
+        $post["userid"] = $_COOKIE["userid"];
+        $post["token"] = $_COOKIE["token"];
+        $post["name"] = $name;
+        $url = dirname(dirname("http://" . $_SERVER['SERVER_NAME'] . $_SERVER["REQUEST_URI"])) . "/api/view_user.php";
+        $options = array('http' => array(
+            'header' => "Content-Type: application/x-www-form-urlencoded",
+            'method' => 'POST',
+            'content' => http_build_query($post),
+            ),
+        );
+        $result = file_get_contents($url, false, stream_context_create($options));
+        return json_decode($result, true); // 以 array 返回json解码的数据
+    }
+    $viewing_userid = name_to_userid($name, array())["data"]["userid"];
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -85,7 +100,8 @@ $user_to_view = $_REQUEST['user_to_view'];
                 </button>
                 <div class="mdl-card__media mdl-color--white mdl-color-text--grey-600">
                     <img src="../images/image/logo_sample_64.png">   <!-- TODO 统一为用css控制 -->
-                    关注：130 | 粉丝：140 | 动态：150<br>
+                    <span id="numbers" style="display: inline-block"> </span>
+                    <!-- 关注：<span id="numberOfFollowed" style="display: inline-block"> </span> | 粉丝：<span id="numberOfFans"> </span> | 动态：<span id="numberOfPosts"> </span> <br> -->
                     好友路径：
                     <div id="two_step_friend">加载好友路径中</div>
                 </div>
@@ -269,9 +285,9 @@ $user_to_view = $_REQUEST['user_to_view'];
                 "userid": getCookie("userid"),
                 "start": startIndex,
                 "per_time":itermsPertime,
-                "viewing_userid": <?php  echo $user_to_view  ?>
+                "viewing_userid": <?php  echo $viewing_userid  ?>
             },
-            function(data){console.log("dataLoaded: " + data); isAddSuccessful = addCardFromJson(data)});  // 添加type参数为application/x-www-form-urlencoded后就会出现问题，不知道为什么
+            function(data){console.log("autoload dataLoaded: " + data); isAddSuccessful = addCardFromJson(data)});  // 添加type参数为application/x-www-form-urlencoded后就会出现问题，不知道为什么
         console.log("isAddSuccessful: " + isAddSuccessful);
         if(isAddSuccessful){
             return startIndex + itermsPertime;
@@ -294,18 +310,37 @@ $user_to_view = $_REQUEST['user_to_view'];
 
 <script>
     isFriendsRouteSuccessful = true;
+    isFriend = false;
+    function checkFriends() {
+        $.post("../api/check_friends.php",
+        {
+            "token": getCookie("token"),
+            "userid": getCookie("userid"),
+            "viewing_userid": <?php  echo $viewing_userid  ?>
+        },
+        function(data){console.log("check_friends: " + data); isFriend = JSON.parse(data)});
+    }
     function loadRoute() {
         $.post("../api/two_step_friend.php",
-            {
-                "token": getCookie("token"),
-                "userid": getCookie("userid"),
-                "target_id": <?php  echo $user_to_view  ?>
-            },
-            function(data){console.log("dataLoaded: " + data); isFriendsRouteSuccessful = addRoute(data)});  // 添加type参数为application/x-www-form-urlencoded后就会出现问题，不知道为什么
+        {
+            "token": getCookie("token"),
+            "userid": getCookie("userid"),
+            "target_id": <?php  echo $viewing_userid  ?>
+        },
+        function(data){console.log("route dataLoaded: " + data); isFriendsRouteSuccessful = addRoute(data)});  // 添加type参数为application/x-www-form-urlencoded后就会出现问题，不知道为什么
         console.log("isFriendsRouteSuccessful: " + isFriendsRouteSuccessful);
     }
-    loadRoute();
-        function addRoute(jsondata) {
+    console.log("checkFriends");
+    checkFriends();
+    console.log("isFriend: " + isFriend.data);
+    if (isFriend.data) {
+        routeHTML = "该用户已经是您的好友";
+        document.getElementById("two_step_friend").innerHTML = routeHTML;
+    }
+    else{
+        loadRoute();
+    }
+    function addRoute(jsondata) {
         var data = JSON.parse(jsondata);
         console.log("in addroutefromjson" + JSON.stringify(data.data));
         if (data.code != 0) return false;
@@ -381,5 +416,48 @@ $user_to_view = $_REQUEST['user_to_view'];
             }
         )
     }
+</script>
+<script>
+    /**
+     * initialize
+     * 关注
+     * 粉丝
+     * 动态
+    */
+    function initialize() {
+        var number_str = "关注：";
+        $.post("../api/view_following.php",{
+            "userid": getCookie("userid"),
+            "token": getCookie("token"),
+            "viewing_userid": <?php echo $viewing_userid ?>
+        }, function(data){
+            var number = JSON.parse(data).data.length;
+            console.log("follow number: " + number);
+            number_str += number;
+            number_str += "  |  粉丝："
+        })
+        $.post("../api/view_fans.php",{
+            "userid": getCookie("userid"),
+            "token": getCookie("token"),
+            "viewing_userid": <?php echo $viewing_userid ?>
+        }, function(data){
+            var number = JSON.parse(data).data.length;
+            console.log("fan number: " + number);
+            number_str += number;
+            number_str += "  |  动态："
+        })
+        $.post("../api/user_posts_num.php",{
+            "userid": getCookie("userid"),
+            "token": getCookie("token"),
+            "viewing_userid": <?php echo $viewing_userid ?>
+        }, function(data){
+            var number = 0;
+            number = JSON.parse(data).data.count;
+            console.log("posts number: " + number);
+            number_str += number;
+            document.getElementById("numbers").innerHTML = number_str;
+        })
+    }
+    initialize();
 </script>
 </html>

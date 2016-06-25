@@ -1,51 +1,105 @@
 <!DOCTYPE html>
-<!-- 显示动态详情-->
+<!-- 显示动态详情
+需要以get方式提供postid
+-->
 <html>
 <head>
     <meta charset="utf-8">
     <script src="../js/angular.js"></script>
     <script src="../js/jquery-1.12.4.js"></script>
     <script src="../js/cookieAPI.js"></script>
+    <link rel="stylesheet" href="../css/blogRoboto.css">
+    <link rel="stylesheet" href="../css/material_icon.css">
+    <link rel="stylesheet" href="../css/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../custom.css">
 </head>
 <body>
+<div>
+
+</div>
+
+
 <div ng-app="showPost" ng-controller="showPostController">
 
-    动态：{{post_records.name}} {{post_records.text}} {{post_records.create_time}}
-<ul>
-<li ng-repeat="x in comments_records">
-    {{x.name}}
-    {{x.text}}
-    {{x.create_time}}
-</li>
-</ul>
+    <div class="mdl-card on-the-road-again mdl-cell mdl-cell--8-col" style="width: 640px">
+        <div class="mdl-color-text--grey-600 mdl-card__supporting-text">{{post_records.text}}</div>
+        <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
+            <div class="minilogo" style="float: left"><img src="{{post_records.icon}}" width="50px" height="50px"></div>
+            <div><strong>{{post_records.name}}</strong>
+                <span>{{post_records.create_time}}</span>
+            </div>
+            <div>
+                <div>评论</div>
+                <ul>
+                    <li ng-repeat="x in comments_records">
+                        <div>{{x.name}}  说：{{x.text}}</div>
+                        <div>{{x.create_time}}</div>
+                    </li>
+                </ul>
+                <form onsubmit="submitForm()" enctype="application/x-www-form-urlencoded">
+                    <div>发表评论</div>
+                    <input name="text" id="commentText">
+                    <script>
+                        function submitForm() {
+                            $.post("../api/comment.php",{
+                                "text": document.getElementById("commentText").value,
+                                "postid": getPostidInURL(),
+                                "userid": getCookie("userid"),
+                                "token": getCookie("token")
+                            }, function (data) {
+                                console.log("in submitForm, data: " + data);
+                                var dataObj = JSON.parse(data);
+                                if(dataObj.code != 0) {
+                                    alert("评论发表错误，错误代码：" + dataObj.code + "   错误信息：" + dataObj.message);
+                                }else{
+                                    alert("评论发表成功！");
+                                }
+                            })
+                        }
+                    </script>
+                </form>
+            </div>
+        </div>
+    </div>
+
 <script type="text/javascript">
     $.ajaxSetup({
         async: false
     });
     var postData;
-    function getPost(post_to_view){
-        userid = getCookie("userid");
-        token = getCookie("token");
-
-        if(post_to_view){
-            if(post_to_view.length > 0){
-                postid
+    function getPost(postid_to_view){
+        var userid = getCookie("userid");
+        var token = getCookie("token");
+        console.log(postid_to_view);
+        var postid = -1;
+        if(postid_to_view) {
+            if (postid_to_view > 0) {
+                postid = postid_to_view;
             }
         }
-        postid = 1;
+        if(postid == -1){ //postid没能得到成功的修改
+            alert("未提供postid参数，查看失败！");
+            return null;
+        }
         $.post("../api/view_post.php", {"userid":  userid, "token": token, "postid": postid}, function(data){console.log("in getPost: " + data); postData = data;})
         var post_obj = JSON.parse(postData);
         console.log("in getPost: " + postData);
-        return post_obj.data
+        return post_obj.data;
     }
 </script>
 <script>
     var app = angular.module("showPost", []);
     app.controller("showPostController", function($scope) {
-        var post = getPost();
+        var post = getPost("<?PHP if(!empty($_REQUEST['postid'])) echo $_REQUEST['postid']; ?>");
         $scope.post_records = post.post;
         $scope.comments_records = post.comments; 
     });
+</script>
+<script>
+    function getPostidInURL(){
+        return "<?PHP  if(!empty($_REQUEST['postid'])) echo $_REQUEST['postid'];?>";
+    }
 </script>
 
 </div>
