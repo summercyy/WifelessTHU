@@ -10,13 +10,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>欢迎来到 Wifeless THU</title>
-    <link rel="stylesheet" href="css/blogRoboto.css">
-    <link rel="stylesheet" href="css/material_icon.css">
-    <link rel="stylesheet" href="css/material.indigo-pink.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="custom.css">
-    <link rel="script" href="js/material.min.js">
-    <link rel="script" href="./path/to/dropzone.js">
+    <link rel="stylesheet" href="../css/blogRoboto.css">
+    <link rel="stylesheet" href="../css/material_icon.css">
+    <link rel="stylesheet" href="../css/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../custom.css">
+    <link rel="script" href="../js/material.min.js">
+    <link rel="script" href="../path/to/dropzone.js">
     <style>
         /*  */
         .on-card-button{
@@ -25,8 +25,8 @@
             margin-left: 2px;
         }
     </style>
-    <script src="./js/jquery-1.12.4.js"></script>
-    <script src="./js/cookieAPI.js"></script>
+    <script src="../js/jquery-1.12.4.js"></script>
+    <script src="../js/cookieAPI.js"></script>
 </head>
 <body>
 
@@ -74,7 +74,7 @@
             <div class="mdl-card coffee-pic mdl-cell mdl-cell--8-col">
                 <div class="mdl-card__media mdl-color-text--grey-50">
 <!--                    <form action="./test/echoRequest.php" method="post">-->
-                    <form action="./api/post.php" method="post" enctype="application/x-www-form-urlencoded">
+                    <form action="../api/post.php" method="post" enctype="application/x-www-form-urlencoded">
                         想说点什么？<input type="text" name="text" title="想要发布的内容" class="mdl-cell--8-col" >
                         <div id="imageUploadArea" style="background: black">拖拽到此处以上传图片</div>
                         <input name="token" id="tokenStore" value="" style="display: none">
@@ -98,7 +98,7 @@
                     <span class="visuallyhidden">add</span>
                 </button>
                 <div class="mdl-card__media mdl-color--white mdl-color-text--grey-600">
-                    <img src="images/image/logo_sample_64.png">   <!-- TODO 统一为用css控制 -->
+                    <img src="../images/image/logo_sample_64.png">   <!-- TODO 统一为用css控制 -->
                     关注：130 | 粉丝：140 | 微博：150<br>
                     好友推荐：
                     <div id="recommend_friends">加载好友推荐中</div>
@@ -166,7 +166,7 @@
 </script>
 <script>
     // 用于设置拖拽上传图片
-//    var myDropZone = new Dropzone("#imageUploadArea",{url: "./api/test_wenkai/handle_post_image.php"})
+//    var myDropZone = new Dropzone("#imageUploadArea",{url: "../api/test_wenkai/handle_post_image.php"})
 </script>
 <script>
     imagePostNode = document.getElementById("imagePostExample");
@@ -283,7 +283,7 @@
     isAddSuccessful = true;
     function autoload(startIndex) {
         $.ajaxSetup({async: false});
-        $.post("./api/view_user_posts.php",
+        $.post("../api/view_user_posts.php",
             {
                 "token": getCookie("token"),
                 "userid": getCookie("userid"),
@@ -315,7 +315,7 @@
 <script>
     isRecommendSuccessful = true;
     function loadRecommend() {
-        $.post("./api/recommend_friends.php",
+        $.post("../api/recommend_friends.php",
             {
                 "token": getCookie("token"),
                 "userid": getCookie("userid")
@@ -367,7 +367,7 @@
         if(storeUserName.uptodate){
             return storeUserName.content;
         }else{
-            $.post("./api/")
+            $.post("../api/")
         }
     }
 </script>
@@ -390,7 +390,7 @@
             console.log("in addFriend: parameter tofollow_userid needed");
             tofollow_userid = userid;
         }
-        $.post("./api/follow.php", {
+        $.post("../api/follow.php", {
             "userid": userid, 
             "token": token,
             "tofollow_userid": tofollow_userid
@@ -411,7 +411,7 @@
     function checkLatestPostID(){
         var latestPostID = -1;
         $.ajaxSetup({aysnc: false});
-        $.post("./api/view_friends_posts.php", {
+        $.post("../api/view_friends_posts.php", {
             "start": '0',
             "per_time": '1',
             "userid": getCookie("userid"),
