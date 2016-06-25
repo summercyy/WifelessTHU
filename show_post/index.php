@@ -3,9 +3,9 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <script src="./js/angular.js"></script>
-    <script src="./js/jquery-1.12.4.js"></script>
-    <script src="./js/cookieAPI.js"></script>
+    <script src="../js/angular.js"></script>
+    <script src="../js/jquery-1.12.4.js"></script>
+    <script src="../js/cookieAPI.js"></script>
 </head>
 <body>
 <div ng-app="showPost" ng-controller="showPostController">
@@ -23,12 +23,19 @@
         async: false
     });
     var postData;
-    function getPost(){
+    function getPost(post_to_view){
         userid = getCookie("userid");
         token = getCookie("token");
+
+        if(post_to_view){
+            if(post_to_view.length > 0){
+                postid
+            }
+        }
         postid = 1;
-        $.post("./api/view_post.php", {"userid":  userid, "token": token, "postid": postid}, function(data){console.log("in getPost: " + data); postData = data;})
+        $.post("../api/view_post.php", {"userid":  userid, "token": token, "postid": postid}, function(data){console.log("in getPost: " + data); postData = data;})
         var post_obj = JSON.parse(postData);
+        console.log("in getPost: " + postData);
         return post_obj.data
     }
 </script>
