@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <script src="./js/angular.js"></script>
     <script src="./js/jquery-1.12.4.js"></script>
+    <script src="./js/cookieAPI.js"></script>
 </head>
 <body>
 <div ng-app="showFriends" ng-controller="showFriendsController">
@@ -16,12 +17,15 @@
 </li>
 </ul>
 <script type="text/javascript">
+    $.ajaxSetup({
+        async: false
+    });
     var friendsData;
     function getFriends(){
-        userid = 1;
-        token = 111;
+        userid = getCookie("userid");
+        token = getCookie("token");
         viewing_userid = 1;
-        $.post("./api/view_friends.php", {"userid":  userid, "token": token, "viewing_userid": viewing_userid}, function(data){console.log("in getFriends: " + data); friendsData = data;})
+        $.post("./api/view_following.php", {"userid":  userid, "token": token, "viewing_userid": viewing_userid}, function(data){friendsData = data;})
         var friends_obj = JSON.parse(friendsData);
         return friends_obj.data
     }
@@ -29,8 +33,7 @@
 <script>
     var app = angular.module("showFriends", []);
     app.controller("showFriendsController", function($scope) {
-        $scope.records = getFriends();
-        ] 
+        $scope.records = getFriends(); 
     });
 </script>
 

@@ -194,7 +194,7 @@
                     window.location.href = "homepage.php?token=" + dataObj.data.token + "&userid=" + dataObj.data.userid;
                     break;
                 default:
-                    alert("登陆失败，请检查用户名和密码！错误码：" + dataObj.code);
+                    alert("登陆失败，请检查用户名和密码！错误码：" + dataObj.code + "    错误信息：" + dataObj.message);
                     console.log("data received: " + data);
                     break;
             }
