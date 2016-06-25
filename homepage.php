@@ -105,7 +105,7 @@ $userID = $_REQUEST["userid"];
                 </div>
             </div>
             <div class="mdl-card something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop">
-                <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent">
+                <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent" onclick="alert('addFriendClicked'); addFriend();">
                     <i class="material-icons mdl-color-text--white" role="presentation">add</i>
                     <span class="visuallyhidden">add</span>
                 </button>
@@ -116,7 +116,7 @@ $userID = $_REQUEST["userid"];
                 </div>
                 <div class="mdl-card__supporting-text meta meta--fill mdl-color-text--grey-600">
                     <div>
-                        <strong>The Newist</strong>
+                        <strong><span name="userNameSpan">加载中</span></strong>
                     </div>
                     <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="menubtn">
                         <li class="mdl-menu__item">About</li>
@@ -362,6 +362,30 @@ $userID = $_REQUEST["userid"];
     /**
      * 检查页面中是否有新动态
      */
+</script>
+
+<script>
+    /**
+     * 在加载完成后更新页面中的元素，此函数会更新所有userNameSpan中的内容
+     */
+    function updateUserName(){
+        var nodeList = document.getElementsByName("userNameSpan");
+        for (var node in nodeList){
+
+        }
+    }
+
+    var storeUserName={
+        "uptodate": false,
+        "content": ""
+    };
+    function getUserName{
+        if(storeUserName.uptodate){
+            return storeUserName.content;
+        }else{
+            $.post("./api/")
+        }
+    }
 </script>
 
 </html>
