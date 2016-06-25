@@ -34,6 +34,7 @@ $userID = $_REQUEST["userid"];
         }
     </style>
     <script src="./js/jquery-1.12.4.js"></script>
+    <script src="./js/cookieAPI.js"></script>
 </head>
 <body>
 <!--用于在网页中存放用户信息-->
@@ -386,6 +387,16 @@ $userID = $_REQUEST["userid"];
             $.post("./api/")
         }
     }
+</script>
+
+<script>
+    /**
+     * 添加好友：从当前的登陆用户发出添加好友申请到
+     */
+    function addFriend() {
+
+    }
+
 </script>
 
 </html>
