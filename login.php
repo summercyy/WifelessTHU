@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <!-- saved from url=(0065)http://www.17sucai.com/preview/207728/2016-01-07/login/index.html -->
-<html lang="en" class="login-content ng-scope" data-ng-app="materialAdmin"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">.ng-animate.item:not(.left):not(.right){-webkit-transition:0s ease-in-out left;transition:0s ease-in-out left}</style><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}</style>
+<html lang="en" class="login-content ng-scope" data-ng-app="materialAdmin">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">.ng-animate.item:not(.left):not(.right){-webkit-transition:0s ease-in-out left;transition:0s ease-in-out left}</style><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}</style>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="Generator" content="EditPlus®">
     <meta name="Author" content="">
     <meta name="Keywords" content="">
     <meta name="Description" content="">
-    <title>Material Admin</title>
+    <title>欢迎来到WifelessTHU</title>
     <!--
         作者：561568157@qq.com
         时间：2016-01-07
@@ -18,7 +20,10 @@
     <link href="./Material Admin_files/material-design-iconic-font.min.css" rel="stylesheet" type="text/css">
     <!-- CSS -->
     <link href="./Material Admin_files/app.min.1.css" rel="stylesheet" type="text/css">
-    <style type="text/css"></style></head>
+    <style type="text/css"></style>
+    <script src="./Material Admin_files/jquery.min.js"></script>
+    <script src="./js/jquery.form.js"></script>
+</head>
 <body class="login-content ng-scope" data-ng-controller="loginCtrl as lctrl" youdao="bind">
 
 <div class="lc-block" id="l-login" data-ng-class="{&#39;toggled&#39;:lctrl.login === 1}">
@@ -68,7 +73,7 @@
 <!-- ngIf: lctrl.register === 1 -->
 
 <!-- ngIf: lctrl.forgot === 1 --><div class="lc-block ng-scope toggled" id="l-forget-password" data-ng-class="{ &#39;toggled&#39;: lctrl.forgot === 1 }" data-ng-if="lctrl.forgot === 1">
-    <h1 class="lean">Azrael</h1>
+    <h1 class="lean">忘记密码</h1>
     <p class="text-left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu risus. Curabitur commodo lorem fringilla enim feugiat commodo sed ac lacus.</p>
     <div class="input-group m-b-20">
         <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
@@ -86,7 +91,7 @@
 </div><!-- end ngIf: lctrl.forgot === 1 -->
 
 <div class="lc-block" id="l-register" data-ng-class="{ 'toggled': lctrl.register === 1 }" data-ng-if="lctrl.register === 1">
-    <h1 class="lean">Azrael</h1>
+    <h1 class="lean">注册</h1>
 
     <div class="input-group m-b-20">
     		<span class="input-group-addon">
@@ -125,7 +130,7 @@
         </label>
     </div>
 
-    <div onclick="alert('hello to reg'); postReg2();" class="btn btn-login btn-danger btn-float"><i class="zmdi zmdi-arrow-forward"></i></div>
+    <div onclick="postRegAjax();" class="btn btn-login btn-danger btn-float"><i class="zmdi zmdi-arrow-forward"></i></div>
 
     <ul class="login-navigation">
         <li data-block="#l-login" class="bgm-green" data-ng-click="lctrl.register = 0; lctrl.login = 1">Login</li>
@@ -133,7 +138,7 @@
     </ul>
 </div>
 
-<script src="./Material Admin_files/jquery.min.js"></script>
+
 <script src="./Material Admin_files/log.js"></script>
 <!-- Angular -->
 <script src="./Material Admin_files/angular.min.js"></script>
@@ -211,15 +216,47 @@
 </script>
 <script>
     // 用户注册
+    // 这个函数已经过时了
     function postReg2(){
         var myform = document.createElement("form");
         myform.method = "post";
         myform.action = "/api/register.php";
+        myform.enctype = "application/x-www-form-urlencoded";
         myform.appendChild(genInputNode("name", document.getElementById("regUsername").value));
         myform.appendChild(genInputNode("email", document.getElementById("regEmail").value));
         myform.appendChild(genInputNode("password", document.getElementById("regPassword").value));
-        myform.appendChild(genInputNode("type", "Web");
+        myform.appendChild(genInputNode("type", "Web"));
+        myform.appendChild(genInputNode("sex", ""));
+        myform.appendChild(genInputNode("icon", ""));
         myform.submit();
+    }
+</script>
+<script>
+    function postRegAjax() {
+        $.post("/api/register.php", {
+            "name": document.getElementById("regUsername").value,
+            "email": document.getElementById("regEmail").value,
+            "password": document.getElementById("regPassword").value,
+            "type": "Web",
+            "sex": "",
+            "icon": ""
+        }, function (data) {
+            console.log("in postRegAjax: " + data);
+            processRegData(data);
+        })
+    }
+    function processRegData(data){
+        var dataObj = JSON.parse(data);
+        if(dataObj.code != 0){
+            alert("注册出现错误，请重新注册。错误代码：" + dataObj.code);
+            return false;
+        }
+
+        var toURL = "./homepage.php?token=" + dataObj.data.token + "&userid=" + dataObj.data.userid;
+        console.log("toURL: " + toURL);
+        alert("注册成功！"); // TODO 优化这些提示的显示方式
+        // 跳转
+        window.location.href=toURL;
     }
 </script>
 <script>
