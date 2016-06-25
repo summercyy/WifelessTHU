@@ -38,6 +38,6 @@ while ($row = mysqli_fetch_array($result)) {
     ));
 }
 
-$userinfo = request_post("/view_user.php", array("viewing_userid" => $viewing_userid));
+@$userinfo = request_post("/view_user.php", array("viewing_userid" => $viewing_userid));
 
 report_success(array("posts" => $return, "userinfo" => $userinfo["data"]));

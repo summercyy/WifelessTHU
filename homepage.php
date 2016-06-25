@@ -309,8 +309,8 @@ $userID = $_REQUEST["userid"];
         console.log("in addcardfromjson" + JSON.stringify(data.data));
         if (data.code != 0) return false;
 
-        for (var i = 0; i < data.data.length; i++) {
-            cardData = data.data[i];
+        for (var i = 0; i < data.data.posts.length; i++) {
+            cardData = data.data.posts[i];
 //            console.log("in addcardfromjson" + JSON.stringify(cardData));
             if (cardData.images) {
                 if (cardData.images[0])
@@ -333,7 +333,7 @@ $userID = $_REQUEST["userid"];
     isAddSuccessful = true;
     function autoload(startIndex) {
 
-        $.post("./api/view_user_posts.php",{"token": "<?PHP echo $token?>", "userid":"<?PHP echo $userID?>", "start": startIndex, "per_time":itermsPertime, "viewing_userid":"<?PHP echo $userID?>"}, function(data){console.log("dataLoaded: " + data); isAddSuccessful = addCardFromJson(data)});
+        $.post("./api/view_user_posts.php",{"token": "<?PHP echo $token?>", "userid":"<?PHP echo $userID?>", "start": startIndex, "per_time":itermsPertime, "viewing_userid":"<?PHP echo $userID?>"}, function(data){console.log("dataLoaded: " + data); isAddSuccessful = addCardFromJson(data)});  // 添加type参数为application/x-www-form-urlencoded后就会出现问题，不知道为什么
         console.log("isAddSuccessful: " + isAddSuccessful);
         if(isAddSuccessful){
             return startIndex + itermsPertime;
@@ -371,7 +371,7 @@ $userID = $_REQUEST["userid"];
     function updateUserName(){
         var nodeList = document.getElementsByName("userNameSpan");
         for (var node in nodeList){
-
+            console.log("jaah")
         }
     }
 
@@ -379,7 +379,7 @@ $userID = $_REQUEST["userid"];
         "uptodate": false,
         "content": ""
     };
-    function getUserName{
+    function getUserName(){
         if(storeUserName.uptodate){
             return storeUserName.content;
         }else{
