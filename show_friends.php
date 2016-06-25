@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- 显示当前登陆用户的好友-->
 <html>
 <head>
     <meta charset="utf-8">
@@ -24,7 +25,7 @@
                 "name":"菜鸟教程2"
             },
 
-        ]
+        ]  //  TODO 把好友的json数据填在这里
     });
 </script>
 
