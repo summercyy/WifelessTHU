@@ -22,7 +22,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>欢迎来到 Wifeless THU</title>
+    <title><?php echo $name;?> 的个人信息</title>
     <link rel="stylesheet" href="../css/blogRoboto.css">
     <link rel="stylesheet" href="../css/material_icon.css">
     <link rel="stylesheet" href="../css/material.indigo-pink.min.css">
@@ -41,8 +41,8 @@
     <script src="../js/jquery-1.12.4.js"></script>
     <script src="../js/cookieAPI.js"></script>
 </head>
-<body>
 
+<body background="../bg.jpg">
 
 <div class="mdl-card amazing mdl-cell mdl-cell--8-col" id="imagePostExample" style="display: none">
     <div class="mdl-card__title mdl-color-text--grey-50" style="background: url(images/testImage/fate.jpeg)">
@@ -95,7 +95,7 @@
             </div>
             <div class="mdl-card something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop">
                 <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent" onclick=" addFriend('');">
-                    <i class="material-icons mdl-color-text--white" role="presentation">add</i>
+                    <i class="material-icons mdl-color-text--white" role="presentation" style="font-size: medium">关注</i>
                     <span class="visuallyhidden">add</span>
                 </button>
                 <div class="mdl-card__media mdl-color--white mdl-color-text--grey-600">
@@ -105,45 +105,10 @@
                     好友路径：
                     <div id="two_step_friend">加载好友路径中</div>
                 </div>
-                <div class="mdl-card__supporting-text meta meta--fill mdl-color-text--grey-600">
-                    <div>
-                        <strong><span name="userNameSpan">加载中</span></strong>
-                    </div>
-                    <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="menubtn">
-                        <li class="mdl-menu__item">About</li>
-                        <li class="mdl-menu__item">Message</li>
-                        <li class="mdl-menu__item">Favorite</li>
-                        <li class="mdl-menu__item">Search</li>
-                    </ul>
-                    <button id="menubtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                        <i class="material-icons" role="presentation">more_vert</i>
-                        <span class="visuallyhidden">show menu</span>
-                    </button>
-                </div>
             </div>
             <div id="postsContainer" >这是存储状态的位置</div>
             <div id="loadMore" onclick="loadMore()">加载更多</div>
 
-
-        <footer class="mdl-mini-footer">
-            <div class="mdl-mini-footer--left-section">
-                <button class="mdl-mini-footer--social-btn social-btn social-btn__twitter">
-                    <span class="visuallyhidden">Twitter</span>
-                </button>
-                <button class="mdl-mini-footer--social-btn social-btn social-btn__blogger">
-                    <span class="visuallyhidden">Facebook</span>
-                </button>
-                <button class="mdl-mini-footer--social-btn social-btn social-btn__gplus">
-                    <span class="visuallyhidden">Google Plus</span>
-                </button>
-            </div>
-            <div class="mdl-mini-footer--right-section">
-                <button class="mdl-mini-footer--social-btn social-btn__share">
-                    <i class="material-icons" role="presentation">share</i>
-                    <span class="visuallyhidden">share</span>
-                </button>
-            </div>
-        </footer>
     </main>
     <div class="mdl-layout__obfuscator"></div>
 </div>
