@@ -4,10 +4,8 @@
  -->
 <!--获取token和userid-->
 <?php
-// 这样藏在网页里好吗？
-// 测试链接：http://localhost/homepage.php?userid=2&token=BwP8zhkKPaNLC3bJ
-$token = $_REQUEST["token"];
-$userID = $_REQUEST["userid"];
+$token = $_COOKIE["token"];
+$userID = $_COOKIE["userid"];
 ?>
 
 
@@ -114,6 +112,7 @@ $userID = $_REQUEST["userid"];
                     <img src="images/image/logo_sample_64.png">   <!-- TODO 统一为用css控制 -->
                     关注：130 | 粉丝：140 | 微博：150<br>
                     好友推荐：
+                    <div id="recommend_friends">加载好友推荐中</div>
                 </div>
                 <div class="mdl-card__supporting-text meta meta--fill mdl-color-text--grey-600">
                     <div>
@@ -334,7 +333,15 @@ $userID = $_REQUEST["userid"];
     isAddSuccessful = true;
     function autoload(startIndex) {
 
-        $.post("./api/view_user_posts.php",{"token": "<?PHP echo $token?>", "userid":"<?PHP echo $userID?>", "start": startIndex, "per_time":itermsPertime, "viewing_userid":"<?PHP echo $userID?>"}, function(data){console.log("dataLoaded: " + data); isAddSuccessful = addCardFromJson(data)});  // 添加type参数为application/x-www-form-urlencoded后就会出现问题，不知道为什么
+        $.post("./api/view_user_posts.php",
+            {
+                "token": "<?PHP echo $token?>",
+                "userid":"<?PHP echo $userID?>",
+                "start": startIndex,
+                "per_time":itermsPertime,
+                "viewing_userid":"<?PHP echo $userID?>"
+            },
+            function(data){console.log("dataLoaded: " + data); isAddSuccessful = addCardFromJson(data)});  // 添加type参数为application/x-www-form-urlencoded后就会出现问题，不知道为什么
         console.log("isAddSuccessful: " + isAddSuccessful);
         if(isAddSuccessful){
             return startIndex + itermsPertime;
@@ -352,6 +359,38 @@ $userID = $_REQUEST["userid"];
         }else{
             startIndex = autoload(startIndex);
         }
+    }
+</script>
+
+<script>
+    isRecommendSuccessful = true;
+    function loadRecommend() {
+        $.post("./api/recommend_friends.php",
+            {
+                "token": "<?PHP echo $token?>",
+                "userid":"<?PHP echo $userID?>",
+            },
+            function(data){console.log("dataLoaded: " + data); isRecommendSuccessful = addRecommend(data)});  // 添加type参数为application/x-www-form-urlencoded后就会出现问题，不知道为什么
+        console.log("isRecommendSuccessful: " + isRecommendSuccessful);
+    }
+    loadRecommend();
+</script>
+
+<script>
+    function addRecommend(jsondata) {
+        var data = JSON.parse(jsondata);
+        console.log("in addrecommendfromjson" + JSON.stringify(data.data));
+        if (data.code != 0) return false;
+        var recommendHTML = "";
+        for (var i = 0; i < Math.min(data.data.length, 4); i++) {
+            recommendData = data.data[i];
+            recommendHTML += recommendData["name"];
+        }
+        if (recommendHTML.length == 0) {
+            recommendHTML = "没有推荐的用户";
+        }
+        document.getElementById("recommend_friends").innerHTML = recommendHTML;
+        return true;
     }
 </script>
 
