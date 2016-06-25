@@ -305,10 +305,7 @@ $user_to_view = $_REQUEST['user_to_view'];
         console.log("isFriendsRouteSuccessful: " + isFriendsRouteSuccessful);
     }
     loadRoute();
-</script>
-
-<script>
-    function addRoute(jsondata) {
+        function addRoute(jsondata) {
         var data = JSON.parse(jsondata);
         console.log("in addroutefromjson" + JSON.stringify(data.data));
         if (data.code != 0) return false;
@@ -385,41 +382,4 @@ $user_to_view = $_REQUEST['user_to_view'];
         )
     }
 </script>
-<script>
-    function checkLatestPostID(){
-        var latestPostID = -1;
-        $.ajaxSetup({aysnc: false});
-        $.post("../api/view_friends_posts.php", {
-            "start": '0',
-            "per_time": '1',
-            "userid": getCookie("userid"),
-            "token": getCookie("token")
-        }, function (data) {
-            dataObj = JSON.parse(data);
-            if(dataObj.code != 0) {
-                latestPostID = -1;
-                console.log("in checkLatestPostID: " + "动态获取错误");
-            }else{ // 成功获取到了动态数据
-                latestPostID = dataObj.data.posts[0].postid;
-                console.log("thisPostID: " + latestPostID);
-            }
-        });
-        return latestPostID;
-    }
-    /**
-     * 页面初始化
-     * 需要已经存在的变量：
-     */
-    var previousLatestPostID = -1;
-    function pageInitialize(){
-//        document.getElementById("havaNewPost")
-        // 设置发布表格信息
-        document.getElementById("tokenStore").value = getCookie("token");
-        document.getElementById("useridStore").value = getCookie("userid");
-        console.log("in pageInitialize: useridStore= " + document.getElementById("useridStore").value );
-        previousLatestPostID = checkLatestPostID();
-    }
-    pageInitialize();
-</script>
-
 </html>
