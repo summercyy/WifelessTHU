@@ -2,12 +2,6 @@
 
  dropzonejs用来支持图片的拖拽上传
  -->
-<!--获取token和userid-->
-<?php
-$token = $_COOKIE["token"];
-$userID = $_COOKIE["userid"];
-?>
-
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
@@ -35,12 +29,7 @@ $userID = $_COOKIE["userid"];
     <script src="./js/cookieAPI.js"></script>
 </head>
 <body>
-<!--用于在网页中存放用户信息-->
 
-<form name="userInfo" style="display: none">
-    <input name="token" value="<?PHP echo $token?>" style="display: none">
-    <input name="userid" value="<?PHP echo $userID?>" style="display: none">
-</form>
 
 <div class="mdl-card amazing mdl-cell mdl-cell--8-col" id="imagePostExample" style="display: none">
     <div class="mdl-card__title mdl-color-text--grey-50" style="background: url(images/testImage/fate.jpeg)">
@@ -81,15 +70,15 @@ $userID = $_COOKIE["userid"];
 </div>
 <div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded">
     <main class="mdl-layout__content">
-        < class="demo-blog__posts mdl-grid">
+        <div class="demo-blog__posts mdl-grid">
             <div class="mdl-card coffee-pic mdl-cell mdl-cell--8-col">
                 <div class="mdl-card__media mdl-color-text--grey-50">
 <!--                    <form action="./test/echoRequest.php" method="post">-->
                     <form action="./api/post.php" method="post" enctype="application/x-www-form-urlencoded">
                         想说点什么？<input type="text" name="text" title="想要发布的内容" class="mdl-cell--8-col" >
                         <div id="imageUploadArea" style="background: black">拖拽到此处以上传图片</div>
-                        <input name="token" value="<?PHP echo $token?>" style="display: none">
-                        <input name="userid" value="<?PHP echo $userID?>" style="display: none">
+                        <input name="token" id="tokenStore" value="" style="display: none">
+                        <input name="userid" id="useridStore" value="" style="display: none">
                         <input name="images" value="">
                         <input type="submit" name="发布">
                     </form>
@@ -104,7 +93,7 @@ $userID = $_COOKIE["userid"];
                 </div>
             </div>
             <div class="mdl-card something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop">
-                <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent" onclick=" addFriend();">
+                <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent" onclick=" addFriend('');">
                     <i class="material-icons mdl-color-text--white" role="presentation">add</i>
                     <span class="visuallyhidden">add</span>
                 </button>
@@ -220,7 +209,7 @@ $userID = $_COOKIE["userid"];
                     '<span>2 days ago</span>'+
                     '</div>'+
                     '<div>'+
-                    '<ul>        <li class="on-card-button">            赞            </li>            <li class="on-card-button">            评论            </li>            </ul>'+
+                    '<ul>  <li class="on-card-button">评论</li></ul>'+
                     '</div>'+
                     '</div>'+
                     '</div>';
@@ -229,49 +218,10 @@ $userID = $_COOKIE["userid"];
             default:
                 throw "Invalid cardDataObject type";
         }
-//        thisNode.style.display = "block";
-//        thisNode.firstChild.firstChild.innerHTML = cardDataObject.textContent;
-//        thisNode.getElementById("cardText").innerHTML = cardDataObject.textContent;
-//        thisNode.firstChild.nextSibling.firstChild.nextSibling.innerHTML = cardDataObject.textContent;
-
         var postContainer = document.getElementById("postsContainer");
         postContainer.appendChild(cardData1);
-//        postContainer.appendChild(thisNode);
-//        cardNode = document.createElement("div");
-
-
-
     }
 
-    var cardData2 = {
-        type: "text",
-        poster : {
-            posterID : "123",
-            posterName: "Saber",
-            posterIconUrl: "./images/testImage/logo_sample_64.png"
-        },
-        textContent : "今天天气不错。",
-        postID : "456"
-    };
-    var cardDataImage = {
-        type: "textAndImage",
-        poster:{
-            posterID : "123",
-            posterName: "Saber",
-            posterIconUrl: "./images/testImage/logo_sample_64.png"
-        },
-        textContent : "这张图挺漂亮的。",
-        imageUrl : "./images/testImage/fate.jpeg"
-    };
-
-    // 设置节点
-//    addOneCard(cardData2);
-//    addOneCard(cardDataImage);
-    //    function createTextPostCard(content, posterID, postID) {
-    //
-    //    }
-
-    // 测试用例
 
 </script>
 
@@ -290,7 +240,7 @@ $userID = $_COOKIE["userid"];
             '<span> </span>'+
             '</div>'+
             '<div>'+
-            '<ul>        <li class="on-card-button">            赞            </li>            <li class="on-card-button">            评论            </li>            </ul>'+
+            '<ul>   <li class="on-card-button">            评论            </li>            </ul>'+
             '</div>'+
             '</div>'+
             '</div>';
@@ -332,14 +282,14 @@ $userID = $_COOKIE["userid"];
     itermsPertime = 10;
     isAddSuccessful = true;
     function autoload(startIndex) {
-
+        $.ajaxSetup({async: false});
         $.post("./api/view_user_posts.php",
             {
-                "token": "<?PHP echo $token?>",
-                "userid":"<?PHP echo $userID?>",
+                "token": getCookie("token"),
+                "userid": getCookie("userid"),
                 "start": startIndex,
                 "per_time":itermsPertime,
-                "viewing_userid":"<?PHP echo $userID?>"
+                "viewing_userid": getCookie("userid")
             },
             function(data){console.log("dataLoaded: " + data); isAddSuccessful = addCardFromJson(data)});  // 添加type参数为application/x-www-form-urlencoded后就会出现问题，不知道为什么
         console.log("isAddSuccessful: " + isAddSuccessful);
@@ -367,8 +317,8 @@ $userID = $_COOKIE["userid"];
     function loadRecommend() {
         $.post("./api/recommend_friends.php",
             {
-                "token": "<?PHP echo $token?>",
-                "userid":"<?PHP echo $userID?>",
+                "token": getCookie("token"),
+                "userid": getCookie("userid")
             },
             function(data){console.log("dataLoaded: " + data); isRecommendSuccessful = addRecommend(data)});  // 添加type参数为application/x-www-form-urlencoded后就会出现问题，不知道为什么
         console.log("isRecommendSuccessful: " + isRecommendSuccessful);
@@ -461,7 +411,7 @@ $userID = $_COOKIE["userid"];
     function checkLatestPostID(){
         var latestPostID = -1;
         $.ajaxSetup({aysnc: false});
-        $.post("./api/view_friends_posts", {
+        $.post("./api/view_friends_posts.php", {
             "start": '0',
             "per_time": '1',
             "userid": getCookie("userid"),
@@ -486,6 +436,10 @@ $userID = $_COOKIE["userid"];
     var previousLatestPostID = -1;
     function pageInitialize(){
 //        document.getElementById("havaNewPost")
+        // 设置发布表格信息
+        document.getElementById("tokenStore").value = getCookie("token");
+        document.getElementById("useridStore").value = getCookie("userid");
+        console.log("in pageInitialize: useridStore= " + document.getElementById("useridStore").value );
         previousLatestPostID = checkLatestPostID();
     }
     pageInitialize();
