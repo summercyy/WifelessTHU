@@ -24,8 +24,8 @@
     function getFans(){
         userid = getCookie("userid");
         token = getCookie("token");
-        viewing_userid = userid;
-        $.post("./api/view_fans.php", {"userid":  userid, "token": token, "viewing_userid": viewing_userid}, function(data){console.log("in getFans: " + data); fansData = data;})
+        viewing_userid = 1;
+        $.post("./api/view_fans.php", {"userid":  userid, "token": token, "viewing_userid": viewing_userid}, function(data){fansData = data;})
         var fans_obj = JSON.parse(fansData);
         return fans_obj.data
     }

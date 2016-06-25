@@ -25,12 +25,9 @@
         userid = getCookie("userid");
         token = getCookie("token");
         viewing_userid = 1;
-        $.post("./api/view_following.php", {"userid":  userid, "token": token, "viewing_userid": viewing_userid}, change)
+        $.post("./api/view_following.php", {"userid":  userid, "token": token, "viewing_userid": viewing_userid}, function(data){friendsData = data;})
         var friends_obj = JSON.parse(friendsData);
         return friends_obj.data
-    }
-    function change(data){
-        friendsData = data;
     }
 </script>
 <script>
