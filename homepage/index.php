@@ -30,44 +30,6 @@
 </head>
 <body background="../bg.jpg">
 
-
-<div class="mdl-card amazing mdl-cell mdl-cell--8-col" id="imagePostExample" style="display: none">
-    <div class="mdl-card__title mdl-color-text--grey-50" style="background: url(images/testImage/fate.jpeg)">
-        <span id = "cardText"> 这是有图片的展示页 </span>
-    </div>
-    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-        Enim labore aliqua consequat ut quis ad occaecat aliquip incididunt. Sunt nulla eu enim irure enim nostrud aliqua consectetur ad consectetur sunt ullamco officia. Ex officia laborum et consequat duis.
-    </div>
-    <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-        <div class="minilogo"></div>
-        <div>
-            <strong><span id="userNameShow">The Newist</span></strong>
-            <span>2 days ago</span>
-        </div>
-    </div>
-</div>
-<div class="mdl-card on-the-road-again mdl-cell mdl-cell--8-col" id="textPostExample" style="display: none">
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text">
-        <span id = "cardText"> 这是只有文字的展示页 </span>
-    </div>
-    <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-        <div class="minilogo"></div>
-        <div>
-            <strong>The Newist</strong>
-            <span>2 days ago</span>
-        </div>
-        <div>
-            <ul>
-                <li class="on-card-button">
-                    赞
-                </li>
-                <li class="on-card-button">
-                    评论
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
 <div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded">
     <main class="mdl-layout__content">
         <div class="demo-blog__posts mdl-grid">
@@ -119,7 +81,7 @@
             </div>
             <button id="haveNewPost" onclick="location.reload(true)" style="display: none">主人，您有新动态了~~ 点我刷新</button>
             <div id="postsContainer" >这是存储状态的位置</div>
-            <div id="loadMore" onclick="loadMore()">加载更多</div>
+            <button id="loadMore" onclick="loadMore()">加载更多</button>
 
     </main>
     <div class="mdl-layout__obfuscator"></div>
