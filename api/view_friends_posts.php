@@ -40,4 +40,4 @@ while ($row = mysqli_fetch_array($result)) {
     ));
 }
 
-report_success($return);
+report_success(array("posts" => $return));
