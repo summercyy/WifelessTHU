@@ -87,7 +87,7 @@ $userID = $_REQUEST["userid"];
                 <div class="mdl-card__media mdl-color-text--grey-50">
 <!--                    <form action="./test/echoRequest.php" method="post">-->
                     <form action="./api/post.php" method="post" enctype="application/x-www-form-urlencoded">
-                        <input type="text" name="text" title="想要发布的内容" class="mdl-cell--8-col">
+                        想说点什么？<input type="text" name="text" title="想要发布的内容" class="mdl-cell--8-col" >
                         <div id="imageUploadArea" style="background: black">拖拽到此处以上传图片</div>
                         <input name="token" value="<?PHP echo $token?>" style="display: none">
                         <input name="userid" value="<?PHP echo $userID?>" style="display: none">
@@ -105,7 +105,7 @@ $userID = $_REQUEST["userid"];
                 </div>
             </div>
             <div class="mdl-card something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop">
-                <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent">
+                <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent" onclick="alert('addFriendClicked'); addFriend();">
                     <i class="material-icons mdl-color-text--white" role="presentation">add</i>
                     <span class="visuallyhidden">add</span>
                 </button>
@@ -116,7 +116,7 @@ $userID = $_REQUEST["userid"];
                 </div>
                 <div class="mdl-card__supporting-text meta meta--fill mdl-color-text--grey-600">
                     <div>
-                        <strong>The Newist</strong>
+                        <strong><span name="userNameSpan">加载中</span></strong>
                     </div>
                     <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="menubtn">
                         <li class="mdl-menu__item">About</li>
@@ -309,8 +309,8 @@ $userID = $_REQUEST["userid"];
         console.log("in addcardfromjson" + JSON.stringify(data.data));
         if (data.code != 0) return false;
 
-        for (var i = 0; i < data.data.length; i++) {
-            cardData = data.data[i];
+        for (var i = 0; i < data.data.posts.length; i++) {
+            cardData = data.data.posts[i];
 //            console.log("in addcardfromjson" + JSON.stringify(cardData));
             if (cardData.images) {
                 if (cardData.images[0])
@@ -333,7 +333,7 @@ $userID = $_REQUEST["userid"];
     isAddSuccessful = true;
     function autoload(startIndex) {
 
-        $.post("./api/view_user_posts.php",{"token": "<?PHP echo $token?>", "userid":"<?PHP echo $userID?>", "start": startIndex, "per_time":itermsPertime, "viewing_userid":"<?PHP echo $userID?>"}, function(data){console.log("dataLoaded: " + data); isAddSuccessful = addCardFromJson(data)});
+        $.post("./api/view_user_posts.php",{"token": "<?PHP echo $token?>", "userid":"<?PHP echo $userID?>", "start": startIndex, "per_time":itermsPertime, "viewing_userid":"<?PHP echo $userID?>"}, function(data){console.log("dataLoaded: " + data); isAddSuccessful = addCardFromJson(data)});  // 添加type参数为application/x-www-form-urlencoded后就会出现问题，不知道为什么
         console.log("isAddSuccessful: " + isAddSuccessful);
         if(isAddSuccessful){
             return startIndex + itermsPertime;
@@ -362,6 +362,30 @@ $userID = $_REQUEST["userid"];
     /**
      * 检查页面中是否有新动态
      */
+</script>
+
+<script>
+    /**
+     * 在加载完成后更新页面中的元素，此函数会更新所有userNameSpan中的内容
+     */
+    function updateUserName(){
+        var nodeList = document.getElementsByName("userNameSpan");
+        for (var node in nodeList){
+            console.log("jaah")
+        }
+    }
+
+    var storeUserName={
+        "uptodate": false,
+        "content": ""
+    };
+    function getUserName(){
+        if(storeUserName.uptodate){
+            return storeUserName.content;
+        }else{
+            $.post("./api/")
+        }
+    }
 </script>
 
 </html>
