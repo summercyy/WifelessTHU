@@ -81,7 +81,7 @@ $userID = $_COOKIE["userid"];
 </div>
 <div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded">
     <main class="mdl-layout__content">
-        <div class="demo-blog__posts mdl-grid">
+        < class="demo-blog__posts mdl-grid">
             <div class="mdl-card coffee-pic mdl-cell mdl-cell--8-col">
                 <div class="mdl-card__media mdl-color-text--grey-50">
 <!--                    <form action="./test/echoRequest.php" method="post">-->
@@ -130,8 +130,8 @@ $userID = $_COOKIE["userid"];
                     </button>
                 </div>
             </div>
-            <div id="haveNewPost" onclick="location.reload(true)">暂时没有新动态。此行字应该隐藏掉。</div>
-            <div id="postsContainer">这是存储状态的位置</div>
+            <button id="haveNewPost" onclick="location.reload(true)" style="display: none">主人，您有新动态了~~ 点我刷新</button>
+            <div id="postsContainer" >这是存储状态的位置</div>
             <div id="loadMore" onclick="loadMore()">加载更多</div>
 
 
@@ -400,18 +400,12 @@ $userID = $_COOKIE["userid"];
 
 <script>
     /**
-     * 检查页面中是否有新动态
-     */
-</script>
-
-<script>
-    /**
      * 在加载完成后更新页面中的元素，此函数会更新所有userNameSpan中的内容
      */
     function updateUserName(){
         var nodeList = document.getElementsByName("userNameSpan");
         for (var node in nodeList){
-            console.log("jaah")
+            console.log("jaah");
         }
     }
 
@@ -439,13 +433,17 @@ $userID = $_COOKIE["userid"];
         if (r != null) return unescape(r[2]); return null;
     }
 
-    function addFriend() {
+    function addFriend(tofollow_userid) {
         var userid = getCookie("userid");
         var token = getCookie("token");
+        if(tofollow_userid.length <= 0){
+            console.log("in addFriend: parameter tofollow_userid needed");
+            tofollow_userid = userid;
+        }
         $.post("./api/follow.php", {
             "userid": userid, 
             "token": token,
-            "tofollow_userid": userid
+            "tofollow_userid": tofollow_userid
         },function (data) {
             console.log("in addFriend: " + data);
             var dataObj = JSON.parse(data);
@@ -454,9 +452,59 @@ $userID = $_COOKIE["userid"];
             }else{
                 alert("操作错误！错误码：" + dataObj.code + "     提示信息：" + dataObj.message);
             }
-            
             }
         )
+    }
+
+</script>
+<script>
+    function checkLatestPostID(){
+        var latestPostID = -1;
+        $.ajaxSetup({aysnc: false});
+        $.post("./api/view_friends_posts", {
+            "start": '0',
+            "per_time": '1',
+            "userid": getCookie("userid"),
+            "token": getCookie("token")
+        }, function (data) {
+            dataObj = JSON.parse(data);
+            if(dataObj.code != 0) {
+                latestPostID = -1;
+                console.log("in checkLatestPostID: " + "动态获取错误");
+            }else{ // 成功获取到了动态数据
+                latestPostID = dataObj.data.posts[0].postid;
+                console.log("thisPostID: " + latestPostID);
+            }
+        });
+        return latestPostID;
+    }
+
+    /**
+     * 页面初始化
+     * 需要已经存在的变量：
+     */
+    var previousLatestPostID = -1;
+    function pageInitialize(){
+//        document.getElementById("havaNewPost")
+        previousLatestPostID = checkLatestPostID();
+    }
+    pageInitialize();
+</script>
+<script>
+    /**
+     * 检查页面中是否有新动态
+     * 如果有的话就更新页面中的提示信息
+     */
+    function checkNewPost() {
+        var thisID = checkLatestPostID();
+        if(thisID > previousLatestPostID){
+            previousLatestPostID = thisID;
+            // 更新页面信息
+            document.getElementById("haveNewPost").style.display = "block";
+            return true;
+        }else{
+            return false;
+        }
     }
 
 </script>
