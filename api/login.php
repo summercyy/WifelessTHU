@@ -13,7 +13,7 @@ require_once 'api_utilities.php';
 $con = db_connect();
 
 $name = filter($con, $_POST["name"]);
-$email = filter($con, $_POST["email"]);
+@$email = filter($con, $_POST["email"]);
 $password = filter($con, $_POST["password"]);
 $type = filter($con, $_POST["type"]);
 
