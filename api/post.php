@@ -24,7 +24,7 @@ if (strlen($text) > 65535) {
     report_error(2, "正文过长");
 }
 
-$imageArray = null;
+$imageArray = array();
 if (strlen($images) > 0) {
     $imageArray = explode(" | ", $images);
     if (count($imageArray) > 9) {
