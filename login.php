@@ -190,7 +190,7 @@
                     // 设置cookie
                     saveCookie("token", dataObj.data.token);
                     saveCookie("userid", dataObj.data.userid);
-                    alert("cookie saved!");
+                    alert("登陆成功");
                     window.location.href = "homepage.php?token=" + dataObj.data.token + "&userid=" + dataObj.data.userid;
                     break;
                 default:
@@ -223,6 +223,8 @@
             return false;
         }
 
+        saveCookie("token", dataObj.data.token);
+        saveCookie("userid", dataObj.data.userid);
         var toURL = "./homepage.php";
         console.log("toURL: " + toURL);
         alert("注册成功！"); // TODO 优化这些提示的显示方式
