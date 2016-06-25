@@ -15,7 +15,7 @@ check_login($con);
 
 $userid = intval(filter($con, $_POST["userid"]));
 $text = filter($con, $_POST["text"], false);
-$images = filter($con, $_POST["images"]);
+@$images = filter($con, $_POST["images"]);
 
 if (strlen($text) == 0) {
     report_error(1, "正文不能为空");

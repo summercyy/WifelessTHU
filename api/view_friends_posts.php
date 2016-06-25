@@ -33,9 +33,9 @@ while ($row = mysqli_fetch_array($result)) {
         "text" => $row["text"],
         "images" => $images,
         "create_time" => $row["create_time"],
-        "create_user_userid" => $row["userid"],
-        "create_user_name" => $row["name"],
-        "create_user_icon" => $row["icon"],
+        "userid" => $row["userid"],
+        "name" => $row["name"],
+        "icon" => $row["icon"],
         "comments_num" => $row["num"],
     ));
 }

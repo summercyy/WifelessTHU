@@ -30,67 +30,23 @@
 </head>
 <body background="../bg.jpg">
 
-
-<div class="mdl-card amazing mdl-cell mdl-cell--8-col" id="imagePostExample" style="display: none">
-    <div class="mdl-card__title mdl-color-text--grey-50" style="background: url(images/testImage/fate.jpeg)">
-        <span id = "cardText"> 这是有图片的展示页 </span>
-    </div>
-    <div class="mdl-card__supporting-text mdl-color-text--grey-600">
-        Enim labore aliqua consequat ut quis ad occaecat aliquip incididunt. Sunt nulla eu enim irure enim nostrud aliqua consectetur ad consectetur sunt ullamco officia. Ex officia laborum et consequat duis.
-    </div>
-    <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-        <div class="minilogo"></div>
-        <div>
-            <strong><span id="userNameShow">The Newist</span></strong>
-            <span>2 days ago</span>
-        </div>
-    </div>
-</div>
-<div class="mdl-card on-the-road-again mdl-cell mdl-cell--8-col" id="textPostExample" style="display: none">
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text">
-        <span id = "cardText"> 这是只有文字的展示页 </span>
-    </div>
-    <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-        <div class="minilogo"></div>
-        <div>
-            <strong>The Newist</strong>
-            <span>2 days ago</span>
-        </div>
-        <div>
-            <ul>
-                <li class="on-card-button">
-                    赞
-                </li>
-                <li class="on-card-button">
-                    评论
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
 <div class="demo-blog mdl-layout mdl-js-layout has-drawer is-upgraded">
     <main class="mdl-layout__content">
         <div class="demo-blog__posts mdl-grid">
             <div class="mdl-card coffee-pic mdl-cell mdl-cell--8-col">
                 <div class="mdl-card__media mdl-color-text--grey-50">
-<!--                    <form action="./test/echoRequest.php" method="post">-->
+                    <h3>发表动态</h3>
+                    <iframe allowtransparency="true" frameborder="0" width="410" height="64" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=2&z=3&t=1&v=2&d=2&bd=0&k=&f=&q=0&e=1&a=1&c=54511&w=410&h=64&align=center"></iframe>
+                </div>
+                <div class="mdl-card__media mdl-color-text--grey-50">
                     <form action="../api/post.php" method="post" enctype="application/x-www-form-urlencoded">
-                        想说点什么？<input type="text" name="text" title="想要发布的内容" class="mdl-cell--8-col" >
-                        <div id="imageUploadArea" style="background: black">拖拽到此处以上传图片</div>
+                        <input type="text" name="text" placeholder="想说点什么？" class="mdl-cell--8-col" style="height: 80px; width: 450px;; font-size: medium">
+                        <input type="submit" value="发表">
                         <input name="token" id="tokenStore" value="" style="display: none">
                         <input name="userid" id="useridStore" value="" style="display: none">
-                        <input name="images" value="">
-                        <input type="submit" name="发布">
                     </form>
-                    <h3>发表框</h3>
                 </div>
-                <div class="mdl-card__supporting-text meta mdl-color-text--grey-600">
-                    <div class="minilogo"></div>
-                    <div>
-                        <strong>The Newist</strong>
-                        <span>2 days ago</span>
-                    </div>
-                </div>
+
             </div>
             <div class="mdl-card something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop">
                 <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent" onclick=" addFriend('');">
@@ -108,10 +64,9 @@
                         <input id="search_user" style="height: 25px;font-size:small" placeholder="搜索用户" onkeydown="enterHandler(window.event);" />
                     </div>
                     <ul class="mdl-menu mdl-js-menu mdl-menu--top-left mdl-js-ripple-effect" for="menubtn">
-                        <li class="mdl-menu__item">About</li>
-                        <li class="mdl-menu__item">Message</li>
-                        <li class="mdl-menu__item">Favorite</li>
-                        <li class="mdl-menu__item">Search</li>
+                        <li class="mdl-menu__item" onclick="window.open('../show_friends')">我关注的人</li>
+                        <li class="mdl-menu__item" onclick="window.open('../show_fans')">关注我的人</li>
+                        <li class="mdl-menu__item" onclick="window.open('../about')">关于</li>
                     </ul>
                     <button id="menubtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                         <i class="material-icons" role="presentation" style="font-size: small">更多</i>
@@ -120,8 +75,8 @@
                 </div>
             </div>
             <button id="haveNewPost" onclick="location.reload(true)" style="display: none">主人，您有新动态了~~ 点我刷新</button>
-            <div id="postsContainer" >这是存储状态的位置</div>
-            <div id="loadMore" onclick="loadMore()">加载更多</div>
+            <div id="postsContainer">  </div>
+            <button id="loadMore" onclick="loadMore()">加载更多</button>
 
     </main>
     <div class="mdl-layout__obfuscator"></div>
@@ -156,11 +111,11 @@
         var cardData = document.createElement("div");
         cardData.innerHTML ='<div class="mdl-card on-the-road-again mdl-cell mdl-cell--8-col" style="width: 640px" id="waitingCard">' +
             '<div class="mdl-color-text--grey-600 mdl-card__supporting-text">' +
-            '加载中，请稍候' +  // 此处存放文字
+            'TA有点懒，什么也没说过 >_<' +  // 此处存放文字
             '</div>' +
             '<div class="mdl-card__supporting-text meta mdl-color-text--grey-600">'+
             '<div class="minilogo"></div> '+
-            '<div>'+
+            '<div>'+1
             '<strong>' +  ' ' + '</strong>'+  // 发布者名称
             '<span> </span>'+
             '</div>'+
@@ -404,6 +359,7 @@
             : event.charCode;
         if (keyCode == 13) { // 回车
             var searchname = document.getElementById("search_user").value;
+            document.getElementById("search_user").value = "";
             window.open("../view_user/?name=" + searchname);
         }
     }
