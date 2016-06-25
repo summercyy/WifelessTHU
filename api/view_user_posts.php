@@ -16,10 +16,6 @@ $result = $con->query("SELECT post.*, COUNT(commentid) AS num FROM post LEFT JOI
 check_sql_error($con);
 $count = mysqli_affected_rows($con);
 
-if ($count == 0) {
-    report_error(1, "没有更多状态");
-}
-
 $return = array();
 while ($row = mysqli_fetch_array($result)) {
     $postid = $row["postid"];
