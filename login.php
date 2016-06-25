@@ -175,23 +175,6 @@
 
 <script>
     // 用户登录
-    function postLogin(){
-        var myform = document.createElement("form");
-        myform.method = "post";
-        myform.action = "/api/login.php";
-        var userNameInput = document.createElement("input");
-        userNameInput.setAttribute("name", "name");
-//        console.log(document.getElementById("loginUserName").innerText);
-        userNameInput.setAttribute("value", document.getElementById("loginUserName").value);
-        myform.appendChild(userNameInput);
-        var passwordInput = document.createElement("input");
-        passwordInput.setAttribute("name", "password");
-        passwordInput.setAttribute("value", document.getElementById("loginPassword").value);
-        myform.appendChild(passwordInput);
-        myform.appendChild(genInputNode("type","Web"));
-        myform.submit();
-//        document.body.removeChild(myform);
-    }
     /**
      * 使用ajax实现的异步登陆
      */
@@ -220,25 +203,8 @@
     }
 </script>
 <script>
-    // 用户注册
-    // 这个函数已经过时了
-    function postReg2(){
-        var myform = document.createElement("form");
-        myform.method = "post";
-        myform.action = "/api/register.php";
-        myform.enctype = "application/x-www-form-urlencoded";
-        myform.appendChild(genInputNode("name", document.getElementById("regUsername").value));
-        myform.appendChild(genInputNode("email", document.getElementById("regEmail").value));
-        myform.appendChild(genInputNode("password", document.getElementById("regPassword").value));
-        myform.appendChild(genInputNode("type", "Web"));
-        myform.appendChild(genInputNode("sex", ""));
-        myform.appendChild(genInputNode("icon", ""));
-        myform.submit();
-    }
-</script>
-<script>
     function postRegAjax() {
-        $.post("/api/register.php", {
+        $.post("./api/register.php", {
             "name": document.getElementById("regUsername").value,
             "email": document.getElementById("regEmail").value,
             "password": document.getElementById("regPassword").value,
@@ -257,7 +223,7 @@
             return false;
         }
 
-        var toURL = "./homepage.php?token=" + dataObj.data.token + "&userid=" + dataObj.data.userid;
+        var toURL = "./homepage.php";
         console.log("toURL: " + toURL);
         alert("注册成功！"); // TODO 优化这些提示的显示方式
         // 跳转
