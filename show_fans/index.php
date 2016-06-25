@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<!-- 显示当前用户的好友（粉丝）-->
+<!-- 显示当前用户的（粉丝）
+需要以get方式提供 user_to_view 参数
+-->
 <html>
 <head>
     <title>我的粉丝</title>
