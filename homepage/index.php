@@ -28,7 +28,7 @@
     <script src="../js/jquery-1.12.4.js"></script>
     <script src="../js/cookieAPI.js"></script>
 </head>
-<body>
+<body background="../bg.jpg">
 
 
 <div class="mdl-card amazing mdl-cell mdl-cell--8-col" id="imagePostExample" style="display: none">
@@ -94,27 +94,27 @@
             </div>
             <div class="mdl-card something-else mdl-cell mdl-cell--8-col mdl-cell--4-col-desktop">
                 <button class="mdl-button mdl-js-ripple-effect mdl-js-button mdl-button--fab mdl-color--accent" onclick=" addFriend('');">
-                    <i class="material-icons mdl-color-text--white" role="presentation">add</i>
+                    <i class="material-icons mdl-color-text--white" role="presentation" style="font-size: medium">关注</i>
                     <span class="visuallyhidden">add</span>
                 </button>
                 <div class="mdl-card__media mdl-color--white mdl-color-text--grey-600">
                     <img src="../images/image/logo_sample_64.png">   <!-- TODO 统一为用css控制 -->
-                    关注：130 | 粉丝：140 | 微博：150<br>
-                    好友推荐：
+                    <br />
+                    <h4>好友推荐：</h4>
                     <div id="recommend_friends">加载好友推荐中</div>
                 </div>
                 <div class="mdl-card__supporting-text meta meta--fill mdl-color-text--grey-600">
                     <div>
-                        <strong><span name="userNameSpan">加载中</span></strong>
+                        <input id="search_user" style="height: 25px;font-size:small" placeholder="搜索用户" onkeydown="enterHandler(window.event);" />
                     </div>
-                    <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="menubtn">
+                    <ul class="mdl-menu mdl-js-menu mdl-menu--top-left mdl-js-ripple-effect" for="menubtn">
                         <li class="mdl-menu__item">About</li>
                         <li class="mdl-menu__item">Message</li>
                         <li class="mdl-menu__item">Favorite</li>
                         <li class="mdl-menu__item">Search</li>
                     </ul>
                     <button id="menubtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-                        <i class="material-icons" role="presentation">more_vert</i>
+                        <i class="material-icons" role="presentation" style="font-size: small">更多</i>
                         <span class="visuallyhidden">show menu</span>
                     </button>
                 </div>
@@ -123,26 +123,6 @@
             <div id="postsContainer" >这是存储状态的位置</div>
             <div id="loadMore" onclick="loadMore()">加载更多</div>
 
-
-        <footer class="mdl-mini-footer">
-            <div class="mdl-mini-footer--left-section">
-                <button class="mdl-mini-footer--social-btn social-btn social-btn__twitter">
-                    <span class="visuallyhidden">Twitter</span>
-                </button>
-                <button class="mdl-mini-footer--social-btn social-btn social-btn__blogger">
-                    <span class="visuallyhidden">Facebook</span>
-                </button>
-                <button class="mdl-mini-footer--social-btn social-btn social-btn__gplus">
-                    <span class="visuallyhidden">Google Plus</span>
-                </button>
-            </div>
-            <div class="mdl-mini-footer--right-section">
-                <button class="mdl-mini-footer--social-btn social-btn__share">
-                    <i class="material-icons" role="presentation">share</i>
-                    <span class="visuallyhidden">share</span>
-                </button>
-            </div>
-        </footer>
     </main>
     <div class="mdl-layout__obfuscator"></div>
 </div>
@@ -415,6 +395,18 @@
     }
     setInterval(checkNewPost, 30000);
 
+</script>
+<script>
+    function enterHandler(event)
+    {
+        var keyCode = event.keyCode ? event.keyCode
+            : event.which ? event.which
+            : event.charCode;
+        if (keyCode == 13) { // 回车
+            var searchname = document.getElementById("search_user").value;
+            window.location.href = "../view_user/?name=" + searchname;
+        }
+    }
 </script>
 
 </html>
