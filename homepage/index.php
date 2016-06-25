@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../custom.css">
     <link rel="script" href="../js/material.min.js">
-    <link rel="script" href="../path/to/dropzone.js">
+    <link rel="script" href="path/to/dropzone.js">
     <style>
         /*  */
         .on-card-button{
@@ -313,6 +313,28 @@
 </script>
 
 <script>
+    function addRecommend(jsondata) {
+        var data = JSON.parse(jsondata);
+        console.log("in addrecommendfromjson" + JSON.stringify(data.data));
+        if (data.code != 0) return false;
+        var recommendHTML = "";
+        for (var i = 0; i < Math.min(data.data.length, 4); i++) {
+            recommendData = data.data[i];
+            HTMLString = "<div onclick='' style='width: 50px; height: 60px; float: left; background-color: silver; margin: 5px'>"
+                + "<span style='text-align: center'>" + recommendData["name"] + "</span>"
+                + "<button onclick='addFriend("+ recommendData["userid"] +")'>关注</button>"
+                + "</div>";
+            recommendHTML += HTMLString;
+        }
+        if (recommendHTML.length == 0) {
+            recommendHTML = "没有推荐的用户";
+        }
+        document.getElementById("recommend_friends").innerHTML = recommendHTML;
+        return true;
+    }
+</script>
+
+<script>
     isRecommendSuccessful = true;
     function loadRecommend() {
         $.post("../api/recommend_friends.php",
@@ -324,24 +346,6 @@
         console.log("isRecommendSuccessful: " + isRecommendSuccessful);
     }
     loadRecommend();
-</script>
-
-<script>
-    function addRecommend(jsondata) {
-        var data = JSON.parse(jsondata);
-        console.log("in addrecommendfromjson" + JSON.stringify(data.data));
-        if (data.code != 0) return false;
-        var recommendHTML = "";
-        for (var i = 0; i < Math.min(data.data.length, 4); i++) {
-            recommendData = data.data[i];
-            recommendHTML += recommendData["name"];
-        }
-        if (recommendHTML.length == 0) {
-            recommendHTML = "没有推荐的用户";
-        }
-        document.getElementById("recommend_friends").innerHTML = recommendHTML;
-        return true;
-    }
 </script>
 
 <script>
