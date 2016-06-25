@@ -15,6 +15,7 @@ check_sql_error($con);
 $return = array();
 while ($row = mysqli_fetch_array($result)) {
     array_push($return, array(
+        "userid" => $row["userid"],
         "name" => $row["name"],
         "sex" => $row["sex"],
         "icon" => $row["icon"],
