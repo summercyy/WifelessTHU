@@ -21,7 +21,7 @@ if (strlen($name) == 0) {
     report_error(ERROR_MISSING_PARAMETER);
 }
 
-if (strlen($viewing_userid) == 0) {
+if ($viewing_userid == 0) {
     $result = $con->query("SELECT * FROM user WHERE name = '$name'");
 } else {
     $result = $con->query("SELECT * FROM user WHERE userid = '$viewing_userid'");
@@ -32,6 +32,7 @@ if (mysqli_affected_rows($con) == 0) {
 }
 $result = mysqli_fetch_array($result);
 $return = array(
+	"userid" => $result["userid"],
     "name" => $result["name"],
     "sex" => $result["sex"],
     "icon" => $result["icon"],
