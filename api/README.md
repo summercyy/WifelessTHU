@@ -274,6 +274,7 @@
 
 ###### 参数
 
+* `viewing_userid` 所查看的用户 ID
 * `start` 起始位置，从0开始
 * `per_time` 一次返回的动态数量
 
