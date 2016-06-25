@@ -274,17 +274,19 @@
 
 ###### 参数
 
+* `viewing_userid` 所查看的用户 ID
 * `start` 起始位置，从0开始
 * `per_time` 一次返回的动态数量
 
 ###### 返回
 
-* 数组，每个元素包括：
+* `posts` 数组，每个元素包括：
  * `postid` 动态ID
  * `text` 动态内容
  * `images` 图片，参考查看动态 API 说明
  * `create_time` 发表时间
  * `comments_num` 评论数
+* `userinfo` 用户信息，参考查看用户信息 API 说明
 
  ## 查看全部好友动态
 
