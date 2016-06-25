@@ -52,7 +52,7 @@ if ($function == "edit") {
     $result = $con->query("SELECT * FROM user WHERE userid = '$userid'");
     check_sql_error($con);
     $result = mysqli_fetch_array($result);
-    if (strtoupper($password) != strtoupper($result["password"])) {
+    if (strtoupper(md5($password)) != strtoupper($result["password"])) {
         report_error(6, "密码错误");
     }
 }
@@ -78,14 +78,16 @@ if ($function == "edit") {
     if (!$changed_password) {
         $new_password = $password;
     }
-    $con->query("UPDATE user SET name = '$name', password = '$new_password', sex = '$sex', email = '$email', icon = '$icon' WHERE userid = '$userid'");
+    $pass = md5($new_password);
+    $con->query("UPDATE user SET name = '$name', password = '$pass', sex = '$sex', email = '$email', icon = '$icon' WHERE userid = '$userid'");
     check_sql_error($con);
     if ($changed_password) {
         $con->query("DELETE FROM token WHERE userid = '$userid' AND token != '$token'");
         check_sql_error($con);
     }
 } else {
-    $con->query("INSERT INTO user (name, password, sex, email, icon) VALUES ('$name', '$password', '$sex', '$email', '$icon')");
+    $pass = md5($password);
+    $con->query("INSERT INTO user (name, password, sex, email, icon) VALUES ('$name', '$pass', '$sex', '$email', '$icon')");
     check_sql_error($con);
 }
 
