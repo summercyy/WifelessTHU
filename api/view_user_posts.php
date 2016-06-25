@@ -38,6 +38,6 @@ while ($row = mysqli_fetch_array($result)) {
     ));
 }
 
-$userinfo = request_post("/view_user.php", array("viewing_userid" => $viewing_userid));
+@$userinfo = request_post("/view_user.php", array("viewing_userid" => $viewing_userid)); // 屏蔽此处输出的错误信息导致的homepage不能正常工作
 
 report_success(array("posts" => $return, "userinfo" => $userinfo["data"]));

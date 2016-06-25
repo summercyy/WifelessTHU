@@ -87,7 +87,7 @@ $userID = $_REQUEST["userid"];
                 <div class="mdl-card__media mdl-color-text--grey-50">
 <!--                    <form action="./test/echoRequest.php" method="post">-->
                     <form action="./api/post.php" method="post" enctype="application/x-www-form-urlencoded">
-                        <input type="text" name="text" title="想要发布的内容" class="mdl-cell--8-col">
+                        想说点什么？<input type="text" name="text" title="想要发布的内容" class="mdl-cell--8-col" >
                         <div id="imageUploadArea" style="background: black">拖拽到此处以上传图片</div>
                         <input name="token" value="<?PHP echo $token?>" style="display: none">
                         <input name="userid" value="<?PHP echo $userID?>" style="display: none">
@@ -309,8 +309,8 @@ $userID = $_REQUEST["userid"];
         console.log("in addcardfromjson" + JSON.stringify(data.data));
         if (data.code != 0) return false;
 
-        for (var i = 0; i < data.data.length; i++) {
-            cardData = data.data[i];
+        for (var i = 0; i < data.data.posts.length; i++) {
+            cardData = data.data.posts[i];
 //            console.log("in addcardfromjson" + JSON.stringify(cardData));
             if (cardData.images) {
                 if (cardData.images[0])

@@ -218,7 +218,7 @@
         myform.appendChild(genInputNode("name", document.getElementById("regUsername").value));
         myform.appendChild(genInputNode("email", document.getElementById("regEmail").value));
         myform.appendChild(genInputNode("password", document.getElementById("regPassword").value));
-        myform.appendChild(genInputNode("type", "Web");
+        myform.appendChild(genInputNode("type", "Web"));
         myform.submit();
     }
 </script>
