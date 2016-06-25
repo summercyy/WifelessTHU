@@ -14,11 +14,8 @@
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../custom.css">
 </head>
-<body>
-<div>
 
-</div>
-
+<body background="../bg.jpg">
 
 <div ng-app="showPost" ng-controller="showPostController">
 
@@ -54,6 +51,7 @@
                                     alert("评论发表错误，错误代码：" + dataObj.code + "   错误信息：" + dataObj.message);
                                 }else{
                                     alert("评论发表成功！");
+                                    location.reload();
                                 }
                             })
                         }
